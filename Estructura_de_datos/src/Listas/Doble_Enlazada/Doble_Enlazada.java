@@ -310,8 +310,6 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
     public void mostrar_estructura() {
         Nodo<E> cursor = first;
 
-        System.out.println("Hello");
-
         for (int i = 0; i < size; i++) {
             try {
                 System.out.print((i + 1) + "- " + cursor.getPrev().getInfo());
