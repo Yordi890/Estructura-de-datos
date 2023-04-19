@@ -14,7 +14,6 @@ public class Test {
         Cola.add(8);
         Cola.add(2);
         Cola.mostrar_estructura();
-        Cola.obtener();
 
         // Casos de prueba para el método peek
         System.out.println("\nMostrando el primero " + Cola.peek());

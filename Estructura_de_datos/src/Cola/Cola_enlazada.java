@@ -181,36 +181,4 @@ public class Cola_enlazada<E> implements Cola<E> {
             cursor = cursor.getNext();
         }
     }
-
-
-    /* No es lo mismo ver la lista que ver cuál es el primero y último, a veces,
-       no considera el último como lo muestra el método de mostrar_estructura(),
-       claro esto es si lo programaste mal
-     */
-
-    /**
-     * Nos indicará quien es el primero y último
-     *
-     * @since 2.0
-     */
-    public void obtener() {
-        System.out.println("Los del primero");
-        try {
-            System.out.print(first.getInfo() + " ---> ");
-
-            System.out.println(first.getNext().getInfo());
-        } catch (Exception e) {
-            System.out.println("no hay nada");
-        }
-
-        System.out.println("Los del ultimo");
-        try {
-            System.out.print(last.getInfo() + " ---> ");
-
-            System.out.println(last.getNext().getInfo());
-        } catch (Exception e) {
-            System.out.println("no hay nada");
-        }
-
-    }
 }
