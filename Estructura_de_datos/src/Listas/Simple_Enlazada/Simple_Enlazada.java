@@ -327,38 +327,6 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         }
     }
 
-
-
-    /*
-       No es lo mismo ver la lista que ver cuál es el primero y último, a veces,
-       no considera el último como lo muestra el método de mostrar_estructura(),
-       claro esto es si lo programaste mal
-    */
-
-    /**
-     * Nos indicará quien es el primero y último
-     *
-     * @since 3.0
-     */
-    public void obtener() {
-
-        System.out.println("Los del primero");
-        System.out.print(first.getInfo() + " ");
-        try {
-            System.out.println(first.getNext().getInfo());
-        } catch (Exception e) {
-            System.out.println(" no hay nada");
-        }
-
-        System.out.println("Los del ultimo");
-        System.out.print(last.getInfo() + " ");
-        try {
-            System.out.println(last.getNext().getInfo());
-        } catch (Exception e) {
-            System.out.println(" no hay nada");
-        }
-    }
-
     @Override
     public Iterator<E> iterator() {
 

@@ -347,25 +347,6 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
         }
     }
 
-
-    /*
-       No es lo mismo ver la lista que ver cuál es el primero y último, a veces,
-       no considera el último como lo muestra el método de mostrar_estructura(),
-       claro esto es si lo programaste mal
-    */
-
-    /**
-     * Nos indicará quien es el primero y último
-     *
-     * @since 3.0
-     */
-    public void obtener() {
-        System.out.println("Los del primero");
-        System.out.println(first.getPrev().getInfo() + " <-- " + first.getInfo() + " --> " + first.getNext().getInfo());
-        System.out.println("Los del último");
-        System.out.println(last.getPrev().getInfo() + " <-- " + last.getInfo() + " --> " + last.getNext().getInfo());
-    }
-
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {

@@ -19,42 +19,35 @@ public class Test {
 
         Lista.mostrar_estructura();
         System.out.println("Mostrando indicadores del primero y del último");
-        Lista.obtener();
 
         System.out.println("\nAgregando en la primera posición");
         Lista.add(new Persona("5555", "Ernesto", "Fernandez", 21), 0);
         Lista.mostrar_estructura();
         System.out.println("\nMostrando indicadores del primero y del último");
-        Lista.obtener();
 
         System.out.println("\nAgregando en la última posición, como último, último");
         Lista.add(new Persona("6666", "Javier", "Perez", 22), 6);
         Lista.mostrar_estructura();
         System.out.println("\nMostrando indicadores del primero y del último");
-        Lista.obtener();
 
         System.out.println("\nAgregando en cualquier otra posición");
         Lista.add(new Persona("7777", "Daniel", "Ferro", 20), 4);
         Lista.mostrar_estructura();
         System.out.println("\nMostrando indicadores del primero y del último");
-        Lista.obtener();
 
         System.out.println("\nEliminando la primera posición");
         Lista.remove(0);
         Lista.mostrar_estructura();
         System.out.println("\nMostrando indicadores del primero y del último");
-        Lista.obtener();
 
         System.out.println("\nEliminando la última posición");
         Lista.remove(6);
         Lista.mostrar_estructura();
         System.out.println("\nMostrando indicadores del primero y del último");
-        Lista.obtener();
 
         System.out.println("\nEliminando cualquier otra posición");
         Lista.remove(4);
         Lista.mostrar_estructura();
         System.out.println("\nMostrando indicadores del primero y del último");
-        Lista.obtener();
     }
 }
