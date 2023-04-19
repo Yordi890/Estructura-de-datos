@@ -208,23 +208,27 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     }
 
     public void remove(E elemento) {
+        int pos = getNodo(elemento);
+        if (pos != -1) {
+            remove(pos);
+        } else {
+            System.out.println("No se encontró");
+        }
+    }
+
+    public int getNodo(E elemento) {
         Nodo<E> cursor = first;
 
-        if (cursor.getInfo() instanceof Integer) {
-            for (int i = 0; i < size; i++) {
-                if (cursor.getInfo() == elemento) {
-                    remove(i);
-                    break;
-                }
+        int i = 0;
+
+        while (cursor != null) {
+            if (cursor.getInfo().equals(elemento)) {
+                return i;
             }
-        } else if (cursor.getInfo() instanceof String) {
-            for (int i = 0; i < size; i++) {
-                if (cursor.getInfo().equals(elemento)) {
-                    remove(i);
-                    break;
-                }
-            }
+            cursor = cursor.getNext();
+            i++;
         }
+        return -1;
     }
 
     /**
