@@ -1,5 +1,8 @@
 package Pilas;
 
+import java.util.Iterator;
+import java.util.function.Consumer;
+
 /**
  * Lista de métodos de la clase Pila_enlazada
  * <table>
@@ -40,7 +43,7 @@ package Pilas;
  * @author Yordanis Tejeda Rodríguez
  * @version 2.0
  */
-public class Pila_enlazada<E> implements Pila<E> {
+public class Pila_enlazada<E> implements Pila<E>, Iterable<E> {
 
     /**
      * Indicador del tope de la pila
@@ -195,5 +198,33 @@ public class Pila_enlazada<E> implements Pila<E> {
             return "No hay para esa cantidad";
         }
 
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+
+            Nodo<E> cursor = top;
+
+            @Override
+            public boolean hasNext() {
+                return cursor != null;
+            }
+
+            @Override
+            public E next() {
+                if (!isEmpty()) {
+                    Nodo<E> aux = cursor;
+                    cursor = cursor.getNext();
+                    return aux.getInfo();
+                }
+                return null;
+            }
+        };
+    }
+
+    @Override
+    public void forEach(Consumer<? super E> action) {
+        Iterable.super.forEach(action);
     }
 }
