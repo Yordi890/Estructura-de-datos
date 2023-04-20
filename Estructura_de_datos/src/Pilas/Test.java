@@ -28,6 +28,10 @@ public class Test {
         Pila.push(6);
         Pila.mostrar_estructura();
 
+        for(Integer T : Pila){
+            System.out.println(T);
+        }
+
         // Casos de prueba para el método top y pop
         System.out.println("\nMostrando el tope " + Pila.top());
 

@@ -1,5 +1,8 @@
 package Cola;
 
+import java.util.Iterator;
+import java.util.function.Consumer;
+
 /**
  * Lista de métodos de la clase Cola_Enlazada
  *
@@ -44,7 +47,7 @@ package Cola;
  * @author Yordanis Tejeda Rodríguez
  * @version 2.0
  */
-public class Cola_enlazada<E> implements Cola<E> {
+public class Cola_enlazada<E> implements Cola<E>, Iterable<E> {
 
     /**
      * Indicador del primer nodo
@@ -180,5 +183,33 @@ public class Cola_enlazada<E> implements Cola<E> {
             }
             cursor = cursor.getNext();
         }
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+
+            Nodo<E> cursor = first;
+
+            @Override
+            public boolean hasNext() {
+                return cursor != null;
+            }
+
+            @Override
+            public E next() {
+                if (!isEmpty()) {
+                    Nodo<E> aux = cursor;
+                    cursor = cursor.getNext();
+                    return aux.getInfo();
+                }
+                return null;
+            }
+        };
+    }
+
+    @Override
+    public void forEach(Consumer<? super E> action) {
+        Iterable.super.forEach(action);
     }
 }

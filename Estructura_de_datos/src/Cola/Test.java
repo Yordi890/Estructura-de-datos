@@ -13,7 +13,13 @@ public class Test {
         Cola.add(4);
         Cola.add(8);
         Cola.add(2);
+        Cola.add(6);
+        Cola.add(10);
         Cola.mostrar_estructura();
+
+        for (Integer T : Cola) {
+            System.out.println(T);
+        }
 
         // Casos de prueba para el método peek
         System.out.println("\nMostrando el primero " + Cola.peek());
