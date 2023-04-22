@@ -29,6 +29,11 @@ import java.util.function.Consumer;
  *     </tr>
  *
  *       <tr>
+ *           <td>{@link #remove(Object) remove(E elemento)}</td>
+ *           <td>boolean</td>
+ *       </tr>
+ *
+ *       <tr>
  *           <td>{@link #get(int) get(int index)}</td>
  *           <td>E</td>
  *           <td>{@linkplain IndexOutOfBoundsException}</td>
@@ -205,6 +210,29 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
             return aux.getInfo(); // Para saber cuál fue el objeto que fue eliminado
         }
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+    }
+
+    /**
+     * Retira de la lista la primera la ocurrencia del objeto
+     * especificado. Si no se encuentra se mantendrá sin cambios.
+     *
+     * @param elemento elemento a ser removido de la lista
+     * @return true si fue removido, en caso contrario false
+     * @see #remove(int) remove(int index)
+     * @since 4.0
+     */
+    public boolean remove(E elemento) {
+        Nodo<E> cursor = first;
+
+        for (int i = 0; i < size; i++) {
+            if (cursor.getInfo().equals(elemento)) {
+                remove(i);
+                return true;
+            }
+            cursor = cursor.getNext();
+        }
+
+        return false;
     }
 
     /**

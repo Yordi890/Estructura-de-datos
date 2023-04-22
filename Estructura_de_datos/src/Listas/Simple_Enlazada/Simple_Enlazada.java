@@ -29,6 +29,11 @@ import java.util.function.Consumer;
  *     </tr>
  *
  *       <tr>
+ *           <td>{@link #remove(Object) remove(E elemento)}</td>
+ *           <td>boolean</td>
+ *       </tr>
+ *
+ *       <tr>
  *           <td>{@link #get(int) get(int index)}</td>
  *           <td>E</td>
  *           <td>{@linkplain IndexOutOfBoundsException}</td>
@@ -207,28 +212,26 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
     }
 
-    public void remove(E elemento) {
-        int pos = getNodo(elemento);
-        if (pos != -1) {
-            remove(pos);
-        } else {
-            System.out.println("No se encontró");
-        }
-    }
-
-    public int getNodo(E elemento) {
+    /**
+     * Retira de la lista la primera la ocurrencia del objeto
+     * especificado. Si no se encuentra se mantendrá sin cambios.
+     *
+     * @param elemento elemento a ser removido de la lista
+     * @return true si fue removido, en caso contrario false
+     * @see #remove(int) remove(int index)
+     * @since 4.0
+     */
+    public boolean remove(E elemento) {
         Nodo<E> cursor = first;
 
-        int i = 0;
-
-        while (cursor != null) {
+        for (int i = 0; i < size; i++) {
             if (cursor.getInfo().equals(elemento)) {
-                return i;
+                remove(i);
+                return true;
             }
             cursor = cursor.getNext();
-            i++;
         }
-        return -1;
+        return false;
     }
 
     /**
