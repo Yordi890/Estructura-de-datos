@@ -200,6 +200,8 @@ public class Pila_enlazada<E> implements Pila<E>, Iterable<E> {
 
     }
 
+
+    // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {

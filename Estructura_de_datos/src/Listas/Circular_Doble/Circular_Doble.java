@@ -249,7 +249,7 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
      * @see #remove(int) remove(int index)
      * @since 4.0
      */
-    public boolean remove(E elemento){
+    public boolean remove(E elemento) {
         Nodo<E> cursor = first;
 
         for (int i = 0; i < size; i++) {
@@ -372,6 +372,8 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
         }
     }
 
+
+    // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
