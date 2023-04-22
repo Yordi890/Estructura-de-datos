@@ -75,7 +75,7 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
     /**
      * Para saber cuantos elementos tiene la lista
      */
-    private int size; // Para saber cuantos elementos tiene la lista
+    private int size;
 
     /**
      * Crea una nueva lista con first y last inicializados en null, porque estaría vacía
