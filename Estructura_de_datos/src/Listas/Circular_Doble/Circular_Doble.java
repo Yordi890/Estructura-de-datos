@@ -376,26 +376,7 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
     // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override
     public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            Nodo<E> cursor = first;
-            int pos = 0;
-
-            @Override
-            public boolean hasNext() {
-                return pos < size;
-            }
-
-            @Override
-            public E next() {
-                if (hasNext()) {
-                    Nodo<E> aux = cursor;
-                    cursor = cursor.getNext();
-                    pos++;
-                    return aux.getInfo();
-                }
-                return null;
-            }
-        };
+        return new LinkedIterator<>(this);
     }
 
     @Override

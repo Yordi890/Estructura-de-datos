@@ -334,25 +334,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override
     public Iterator<E> iterator() {
-
-        return new Iterator<E>() {
-            Nodo<E> cursor = first;
-
-            @Override
-            public boolean hasNext() {
-                return cursor != null;
-            }
-
-            @Override
-            public E next() {
-                if (hasNext()) {
-                    Nodo<E> aux = cursor;
-                    cursor = cursor.getNext();
-                    return aux.getInfo();
-                }
-                return null;
-            }
-        };
+        return new LinkedIterator<>(this);
     }
 
     @Override
