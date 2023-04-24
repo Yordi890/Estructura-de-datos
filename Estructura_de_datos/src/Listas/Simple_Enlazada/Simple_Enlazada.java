@@ -331,6 +331,89 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     }
 
 
+    // Métodos de ordenamiento
+
+    public void bubblesort() { // Funciona, está listo
+
+        Nodo<E> cursor = first, cursor2 = first, aux;
+
+        for (int i = 0; i < size - 1; i++) {
+
+            cursor2 = cursor.getNext();
+
+            for (int j = i + 1; j < size; j++) {
+                if ((int) cursor.getInfo() > (int) cursor2.getInfo()) {
+                    aux = cursor;
+                    cursor.setInfo(cursor2.getInfo());
+                    cursor2.setInfo(aux.getInfo());
+                }
+                cursor2 = cursor2.getNext();
+            }
+
+            cursor = cursor.getNext();
+        }
+    }
+
+
+    public void selectionsort() { // Funciona, está listo
+
+        Nodo<E> cursor = first, cursor2, min_max;
+        E aux;
+
+        for (int i = 0; i < size - 1; i++) {
+
+            min_max = cursor;
+            cursor2 = cursor.getNext();
+
+            for (int j = i + 1; j < size; j++) {
+                if ((int) min_max.getInfo() < (int) cursor2.getInfo()) {
+                    min_max = cursor2;
+                }
+                cursor2 = cursor2.getNext();
+            }
+
+            aux = cursor.getInfo();
+            cursor.setInfo(min_max.getInfo());
+            min_max.setInfo(aux);
+
+            cursor = cursor.getNext();
+        }
+
+
+    }
+
+    public void insertionsort() { // Funciona, está listo
+        Nodo<E> cursor = first.getNext(), cursor2;
+
+        int pos;
+
+        for (int i = 1; i < size; i++) {
+
+            cursor2 = first;
+            pos = 0;
+
+            while ((int) cursor.getInfo() > (int) cursor2.getInfo()) {
+                cursor2 = cursor2.getNext();
+                pos++;
+            }
+
+            add(remove(i), pos);
+
+            cursor = cursor.getNext();
+        }
+    }
+
+
+    public void bucketsort() {
+
+        /*
+           Consiste en dividir la lista por casilleros y luego aplicar un método de ordenamiento
+           en cada uno de ellos y luego concatenarlos (puede ser uno diferente en cada casillero)
+         */
+
+
+    }
+
     // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override
     public Iterator<E> iterator() {

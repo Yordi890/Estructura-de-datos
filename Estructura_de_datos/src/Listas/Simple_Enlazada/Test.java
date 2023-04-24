@@ -9,8 +9,24 @@ public class Test {
 
     public static void main(String[] args) {
 
-        Simple_Enlazada<Persona> Lista = new Simple_Enlazada<>();
+        Simple_Enlazada<Integer> Lista = new Simple_Enlazada<>();
 
+
+        Lista.add(5);
+        Lista.add(9);
+        Lista.add(8);
+        Lista.add(14);
+        Lista.add(2);
+        Lista.add(4);
+        Lista.add(20);
+        Lista.add(1);
+        Lista.add(2);
+        Lista.add(25);
+        Lista.selectionsort();
+
+        Lista.forEach(System.out::println);
+
+        /*
         // Casos de prueba para el método add normal
         Lista.add(new Persona("0000", "Yordanis", "Tejeda", 20));
         Lista.add(new Persona("1111", "Rafael", "Hernandez", 22));
@@ -57,6 +73,8 @@ public class Test {
         Lista.remove(5);
         Lista.mostrar_estructura();
         System.out.println("\nMostrando indicadores del primero y del último");
+
+         */
 
     }
 }
