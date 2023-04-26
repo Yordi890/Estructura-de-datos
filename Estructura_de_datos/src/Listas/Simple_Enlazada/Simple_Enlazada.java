@@ -387,7 +387,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
         int pos;
 
-        for (int i = 1; i < size; i++) {
+        for (int i = 1; i < size; i++) { // Se puede empezar en 1 porque comienzo en first.getNext(), o sea el segundo que para nosotros sería en 1
 
             cursor2 = first;
             pos = 0;

@@ -19,8 +19,6 @@ public class Test {
     public static void main(String[] args) {
         Pila_enlazada<Integer> Pila = new Pila_enlazada<>();
 
-        System.out.println(Pila.sacar_billete(42));
-
         // Casos de prueba para el método push
         Pila.push(4);
         Pila.push(8);
@@ -28,7 +26,7 @@ public class Test {
         Pila.push(6);
         Pila.mostrar_estructura();
 
-        for(Integer T : Pila){
+        for (Integer T : Pila) {
             System.out.println(T);
         }
 
