@@ -63,13 +63,12 @@ public class Punto_Embarque_Equipajes {
         // El while funcionará mientras al menos una estera aún siga teniendo elementos y todavía tenga peso por subir al avión
         while (peso > 0 && (!punto_E[0].isEmpty() || !punto_E[1].isEmpty() || !punto_E[2].isEmpty())) { // Matemática Discreta
             pos_menor = hallar_menor(); // Este método devolverá la estera que tiene el menor peso
-            if (pos_menor != -1) {
-                if (peso - punto_E[pos_menor].peek().getPeso() >= 0) { // Porque si al restarlo da un número negativo se pasaría de peso
-                    peso -= punto_E[pos_menor].poll().getPeso(); // Voy restando al peso el elemento que saque
-                    cant_equipajes++; // Al mismo tiempo voy aumentando la cantidad de equipajes que subí al avión
-                } else {
-                    break; // Si se pasa es que ya no se puede subir más equipaje y entonces rompo el ciclo del while
-                }
+            // Aquí empecé a hacer los cambios
+            if (pos_menor != -1 && peso - punto_E[pos_menor].peek().getPeso() >= 0) {
+                peso -= punto_E[pos_menor].poll().getPeso(); // Voy restando al peso el elemento que saque
+                cant_equipajes++; // Al mismo tiempo voy aumentando la cantidad de equipajes que subí al avión
+            } else {
+                break; // Si se pasa es que ya no se puede subir más equipaje y entonces rompo el ciclo del while
             }
         }
         return cant_equipajes; // Al final retorno la cantidad de equipajes que subí
