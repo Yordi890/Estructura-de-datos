@@ -1,4 +1,12 @@
-package Listas.Multilistas;
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
+package Ejercicios.Multilistas;
 
 import java.util.Scanner;
 
@@ -11,39 +19,6 @@ public class Mulitilistas {
         Scanner in = new Scanner(System.in);
 
         Moodle M = new Moodle();
-          /*
-          
-             Lo hice a mi forma, creo que como ibas te estabas complicando,
-             no obstante no borré el método de buscarNodo() que hiciste, en algún momento puede servir
-          
-             Es una lástima que no se pueda usar el for each con las listas que uno mismo crea
-             intenta hacer una for each en Moodle, en el método add facultad y verás que no puedes
-           
-               for (Nodo N : Lista) {
-                
-              }
-          
-             Veo que ya también estás haciendo los menus sin necesidad de crear una bandera y lo haces
-             con la misma elección del usuario, yo también me di cuenta de eso, o sea, hemos vivido todo
-             este tiempo engañado :( ... Cuando nos podíamos ahorrar lo de crear una variable boolean y luego cambiarle estado
-             
-             En algunas cosas resumí algo pero no tanto si fuese con JOptionPane fuese mejor porque puedes hacer algo como esto
-          
-             switch (Integer.parseInt(JOptionPane.showInputDialog(null, """
-                                            Entre 1 para agregar una facultad
-                                            Entre 2 para agregar una carrera
-                                            Entre 3 para agregar una asignatura a una carrera de una facultad
-                                            Entre 4 para ver todos los datos de una facultad
-                                            Entre 0 para salir
-                                            """, "Menu de opciones", JOptionPane.QUESTION_MESSAGE))) {
-          }  
-          
-            Pienso que el objetivo de poner todo en una línea de código no es que sea para ahorrar líneas, yo lo hago 
-            para no tener que crear variables, aunque esto solo se puede usar cuando es de un solo uso, como por ejemplo
-            cuando capturo el nombre de la facultad en el case 1 de abajo pero no pudiera hacerlo en caso como el de case 2 
-            porque la quiero usar después (además de que ahí sí que no pudiera usarla ni aunque no la usará como lo ves, pero tú
-            me entiendes)
-           */
         int E;
         do {
             System.out.println("""

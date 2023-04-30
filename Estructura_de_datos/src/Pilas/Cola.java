@@ -43,7 +43,7 @@ import java.util.function.Consumer;
  * @author Yordanis Tejeda Rodríguez
  * @version 2.0
  */
-public class Pila_enlazada<E> implements Pila<E>, Iterable<E> {
+public class Cola<E> implements Pila<E>, Iterable<E> {
 
     /**
      * Indicador del tope de la pila
@@ -59,7 +59,7 @@ public class Pila_enlazada<E> implements Pila<E>, Iterable<E> {
      * Crea una nueva pila con top inicializado en null, porque estaría vacía y
      * con size (cantidad de elementos) en 0
      */
-    public Pila_enlazada() {
+    public Cola() {
         top = null;
         size = 0;
     }
@@ -158,48 +158,7 @@ public class Pila_enlazada<E> implements Pila<E>, Iterable<E> {
 
     }
 
-    public String sacar_billete(int cant_a_sacar) {
-
-        if (cant_a_sacar <= 42) {
-
-            Pila_enlazada<Integer> cinco = new Pila_enlazada<>(), tres = new Pila_enlazada<>(), un_peso = new Pila_enlazada<>();
-            cinco.push(5);
-            cinco.push(5);
-            cinco.push(5);
-            cinco.push(5);
-            tres.push(3);
-            tres.push(3);
-            tres.push(3);
-            tres.push(3);
-            tres.push(3);
-            for (int i = 0; i < 7; i++) {
-                un_peso.push(1);
-            }
-
-            int cant_billetes_cinco = 0, cant_billetes_tres = 0, cant_billetes_uno = 0;
-
-            while (cant_a_sacar >= 5 && !cinco.isEmpty()) {
-                cant_a_sacar -= cinco.pop();
-                cant_billetes_cinco++;
-            }
-
-            while (cant_a_sacar >= 3 && !tres.isEmpty()) {
-                cant_a_sacar -= tres.pop();
-                cant_billetes_tres++;
-            }
-
-            while (cant_a_sacar >= 1 && !un_peso.isEmpty()) {
-                cant_a_sacar -= un_peso.pop();
-                cant_billetes_uno++;
-            }
-
-            return "Hizo falta " + cant_billetes_cinco + " billetes de 5, " + cant_billetes_tres + " billetes de 3 y " + cant_billetes_uno + " billetes de a peso";
-        } else {
-            return "No hay para esa cantidad";
-        }
-
-    }
-
+    // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {

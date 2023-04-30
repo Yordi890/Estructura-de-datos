@@ -29,6 +29,11 @@ import java.util.function.Consumer;
  *     </tr>
  *
  *       <tr>
+ *           <td>{@link #remove(Object) remove(E elemento)}</td>
+ *           <td>boolean</td>
+ *       </tr>
+ *
+ *       <tr>
  *           <td>{@link #get(int) get(int index)}</td>
  *           <td>E</td>
  *           <td>{@linkplain IndexOutOfBoundsException}</td>
@@ -198,7 +203,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
                     last = cursor;
             } else {
                 aux = first; // Para luego saber cuál fue el elemento eliminado
-                first = first.getNext(); // Si es la primera posición basta con mover el indicador de first al siguiente
+                first = first.getNext(); // Si es la primera posición, basta con mover el indicador de first al siguiente
             }
 
             size--; // Siempre se decrementará, en cualquiera de los dos casos
@@ -207,28 +212,26 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
     }
 
-    public void remove(E elemento) {
-        int pos = getNodo(elemento);
-        if (pos != -1) {
-            remove(pos);
-        } else {
-            System.out.println("No se encontró");
-        }
-    }
-
-    public int getNodo(E elemento) {
+    /**
+     * Retira de la lista la primera la ocurrencia del objeto
+     * especificado. Si no se encuentra se mantendrá sin cambios.
+     *
+     * @param elemento elemento a ser removido de la lista
+     * @return true si fue removido, en caso contrario false
+     * @see #remove(int) remove(int index)
+     * @since 4.0
+     */
+    public boolean remove(E elemento) {
         Nodo<E> cursor = first;
 
-        int i = 0;
-
-        while (cursor != null) {
+        for (int i = 0; i < size; i++) {
             if (cursor.getInfo().equals(elemento)) {
-                return i;
+                remove(i);
+                return true;
             }
             cursor = cursor.getNext();
-            i++;
         }
-        return -1;
+        return false;
     }
 
     /**
@@ -327,27 +330,112 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         }
     }
 
+
+    // Métodos de ordenamiento
+
+    public void bubblesort() { // Funciona, está listo
+
+        Nodo<E> cursor = first, cursor2, aux; // El auxiliar nos ayudará a intercambiar los elementos
+
+        for (int i = 0; i < size - 1; i++) {
+
+            cursor2 = cursor.getNext();
+
+            for (int j = i + 1; j < size; j++) {
+                if ((int) cursor.getInfo() > (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+                    aux = cursor;
+                    cursor.setInfo(cursor2.getInfo());
+                    cursor2.setInfo(aux.getInfo());
+                }
+                cursor2 = cursor2.getNext();
+            }
+
+            cursor = cursor.getNext();
+        }
+    }
+
+    public void selectionsort(Simple_Enlazada<Integer> Lista) { // Funciona, está listo
+
+        Nodo<E> cursor = first, cursor2, min_max;
+        E aux;
+
+        for (int i = 0; i < size - 1; i++) {
+
+            min_max = cursor; // Le llamé min_max para no tener que estar cambiándole el nombre cada vez que quiera cambiar el sentido de la ordenación
+            cursor2 = cursor.getNext();
+
+            for (int j = i + 1; j < size; j++) {
+                if ((int) min_max.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+                    min_max = cursor2;
+                }
+                cursor2 = cursor2.getNext();
+            }
+
+            aux = cursor.getInfo();
+            cursor.setInfo(min_max.getInfo());
+            min_max.setInfo(aux);
+
+            cursor = cursor.getNext();
+        }
+
+    }
+
+    public void insertionsort() { // Funciona, está listo
+        Nodo<E> cursor = first.getNext(), cursor2;
+
+        int pos;
+
+        for (int i = 1; i < size; i++) { // Se puede empezar en 1 porque comienzo en first.getNext(), o sea el segundo que para nosotros sería en 1
+
+            cursor2 = first;
+            pos = 0;
+
+            while ((int) cursor.getInfo() > (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+                cursor2 = cursor2.getNext();
+                pos++;
+            }
+
+            add(remove(i), pos);
+
+            cursor = cursor.getNext();
+        }
+    }
+
+
+    public void countingsort() { // Todavía le falta, no está listo
+        Nodo<E> cursor = first, min = first, max = first;
+
+        for (int i = 0; i < size; i++) {
+
+            if ((int) cursor.getInfo() < (int) min.getInfo()) {
+                min = cursor;
+            }
+
+            if ((int) cursor.getInfo() > (int) max.getInfo()) {
+                max = cursor;
+            }
+
+            cursor = cursor.getNext();
+        }
+
+
+    }
+
+
+    public void bucketsort() {
+
+        /*
+           Consiste en dividir la lista por casilleros y luego aplicar un método de ordenamiento
+           en cada uno de ellos y luego concatenarlos (puede ser uno diferente en cada casillero)
+         */
+
+
+    }
+
+    // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override
     public Iterator<E> iterator() {
-
-        return new Iterator<E>() {
-            Nodo<E> cursor = first;
-
-            @Override
-            public boolean hasNext() {
-                return cursor != null;
-            }
-
-            @Override
-            public E next() {
-                if (hasNext()) {
-                    Nodo<E> aux = cursor;
-                    cursor = cursor.getNext();
-                    return aux.getInfo();
-                }
-                return null;
-            }
-        };
+        return new LinkedIterator<>(this);
     }
 
     @Override

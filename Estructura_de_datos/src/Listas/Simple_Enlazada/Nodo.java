@@ -39,4 +39,9 @@ public class Nodo<E> {
     public void setNext(Nodo<E> next) {
         Next = next;
     }
+
+    @Override
+    public String toString() {
+        return "Info: " + Info + " --> Next: " + Next.Info;
+    }
 }

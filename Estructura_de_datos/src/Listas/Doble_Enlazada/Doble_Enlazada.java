@@ -29,6 +29,11 @@ import java.util.function.Consumer;
  *     </tr>
  *
  *       <tr>
+ *           <td>{@link #remove(Object) remove(E elemento)}</td>
+ *           <td>boolean</td>
+ *       </tr>
+ *
+ *       <tr>
  *           <td>{@link #get(int) get(int index)}</td>
  *           <td>E</td>
  *           <td>{@linkplain IndexOutOfBoundsException}</td>
@@ -70,7 +75,7 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
     /**
      * Para saber cuantos elementos tiene la lista
      */
-    private int size; // Para saber cuantos elementos tiene la lista
+    private int size;
 
     /**
      * Crea una nueva lista con first y last inicializados en null, porque estaría vacía
@@ -208,6 +213,29 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
     }
 
     /**
+     * Retira de la lista la primera la ocurrencia del objeto
+     * especificado. Si no se encuentra se mantendrá sin cambios.
+     *
+     * @param elemento elemento a ser removido de la lista
+     * @return true si fue removido, en caso contrario false
+     * @see #remove(int) remove(int index)
+     * @since 4.0
+     */
+    public boolean remove(E elemento) {
+        Nodo<E> cursor = first;
+
+        for (int i = 0; i < size; i++) {
+            if (cursor.getInfo().equals(elemento)) {
+                remove(i);
+                return true;
+            }
+            cursor = cursor.getNext();
+        }
+
+        return false;
+    }
+
+    /**
      * Obtiene el dato de la posición que se le pase como parámetro
      *
      * @param index posición
@@ -328,27 +356,11 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
         }
     }
 
+
+    // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override
     public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            Nodo<E> cursor = first;
-
-            @Override
-            public boolean hasNext() {
-                return cursor != null;
-            }
-
-            @Override
-            public E next() {
-
-                if (hasNext()) {
-                    Nodo<E> aux = cursor;
-                    cursor = cursor.getNext();
-                    return aux.getInfo();
-                }
-                return null;
-            }
-        };
+        return new LinkedIterator<>(this);
     }
 
     @Override

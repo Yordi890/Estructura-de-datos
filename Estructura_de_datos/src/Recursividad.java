@@ -96,7 +96,7 @@ public class Recursividad {
         Recursividad R = new Recursividad();
 
 
-        System.out.println(R.potencia(1, 0));
+        System.out.println(R.potencia(2, 7));
         /*
         int Arr[] = {2, 4, 6, 8, 10};
         int pos = R.Buscar(8, Arr, 0);
