@@ -5,19 +5,8 @@ package Pilas;
  */
 public class Test {
 
-    public static boolean isPalindrome(String palabra) {
-        String cadena = palabra.replace(" ", "");
-        for (int i = 0, j = cadena.length() - 1; i < (cadena.length() - 1) / 2; i++, j--) {
-            if (!(cadena.substring(i, i + 1).equalsIgnoreCase(cadena.substring(j, j + 1)))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
     public static void main(String[] args) {
-        Pila_enlazada<Integer> Pila = new Pila_enlazada<>();
+        Cola<Integer> Pila = new Cola<>();
 
         // Casos de prueba para el método push
         Pila.push(4);

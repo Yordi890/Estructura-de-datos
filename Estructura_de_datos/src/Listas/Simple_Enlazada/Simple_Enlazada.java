@@ -203,7 +203,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
                     last = cursor;
             } else {
                 aux = first; // Para luego saber cuál fue el elemento eliminado
-                first = first.getNext(); // Si es la primera posición basta con mover el indicador de first al siguiente
+                first = first.getNext(); // Si es la primera posición, basta con mover el indicador de first al siguiente
             }
 
             size--; // Siempre se decrementará, en cualquiera de los dos casos
@@ -335,14 +335,14 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
     public void bubblesort() { // Funciona, está listo
 
-        Nodo<E> cursor = first, cursor2 = first, aux;
+        Nodo<E> cursor = first, cursor2, aux; // El auxiliar nos ayudará a intercambiar los elementos
 
         for (int i = 0; i < size - 1; i++) {
 
             cursor2 = cursor.getNext();
 
             for (int j = i + 1; j < size; j++) {
-                if ((int) cursor.getInfo() > (int) cursor2.getInfo()) {
+                if ((int) cursor.getInfo() > (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                     aux = cursor;
                     cursor.setInfo(cursor2.getInfo());
                     cursor2.setInfo(aux.getInfo());
@@ -354,19 +354,18 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         }
     }
 
-
-    public void selectionsort() { // Funciona, está listo
+    public void selectionsort(Simple_Enlazada<Integer> Lista) { // Funciona, está listo
 
         Nodo<E> cursor = first, cursor2, min_max;
         E aux;
 
         for (int i = 0; i < size - 1; i++) {
 
-            min_max = cursor;
+            min_max = cursor; // Le llamé min_max para no tener que estar cambiándole el nombre cada vez que quiera cambiar el sentido de la ordenación
             cursor2 = cursor.getNext();
 
             for (int j = i + 1; j < size; j++) {
-                if ((int) min_max.getInfo() < (int) cursor2.getInfo()) {
+                if ((int) min_max.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                     min_max = cursor2;
                 }
                 cursor2 = cursor2.getNext();
@@ -378,7 +377,6 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
             cursor = cursor.getNext();
         }
-
 
     }
 
@@ -392,7 +390,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
             cursor2 = first;
             pos = 0;
 
-            while ((int) cursor.getInfo() > (int) cursor2.getInfo()) {
+            while ((int) cursor.getInfo() > (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                 cursor2 = cursor2.getNext();
                 pos++;
             }
@@ -401,6 +399,26 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
             cursor = cursor.getNext();
         }
+    }
+
+
+    public void countingsort() { // Todavía le falta, no está listo
+        Nodo<E> cursor = first, min = first, max = first;
+
+        for (int i = 0; i < size; i++) {
+
+            if ((int) cursor.getInfo() < (int) min.getInfo()) {
+                min = cursor;
+            }
+
+            if ((int) cursor.getInfo() > (int) max.getInfo()) {
+                max = cursor;
+            }
+
+            cursor = cursor.getNext();
+        }
+
+
     }
 
 

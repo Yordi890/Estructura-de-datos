@@ -79,6 +79,7 @@ public class Cola_enlazada<E> implements Cola<E>, Iterable<E> {
      */
     @Override
     public void add(E item) {
+
         if (!isEmpty()) {
             last.setNext(new Nodo<>(item));
             last = last.getNext();

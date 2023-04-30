@@ -16,7 +16,7 @@ public class Nodo<E> {
     /**
      * Indicador de siguiente del nodo
      */
-    private Nodo<E> next;
+    private Nodo<E> Next;
 
     /**
      * Crea un nuevo nodo con la información que se le pase como parámetro
@@ -26,11 +26,11 @@ public class Nodo<E> {
     }
 
     public Nodo<E> getNext() {
-        return next;
+        return Next;
     }
 
     public void setNext(Nodo<E> next) {
-        this.next = next;
+        this.Next = next;
     }
 
     public E getInfo() {

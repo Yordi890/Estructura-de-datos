@@ -2,6 +2,7 @@ package Listas.Simple_Enlazada;
 
 import Listas.Persona;
 
+
 /**
  * @author Yordanis Tejeda Rodríguez
  */
@@ -10,7 +11,6 @@ public class Test {
     public static void main(String[] args) {
 
         Simple_Enlazada<Integer> Lista = new Simple_Enlazada<>();
-
 
         Lista.add(5);
         Lista.add(9);
@@ -22,7 +22,8 @@ public class Test {
         Lista.add(1);
         Lista.add(2);
         Lista.add(25);
-        Lista.selectionsort();
+        Lista.mostrar_estructura();
+        Lista.selectionsort(Lista);
 
         Lista.forEach(System.out::println);
 

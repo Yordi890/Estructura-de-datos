@@ -43,7 +43,7 @@ import java.util.function.Consumer;
  * @author Yordanis Tejeda Rodríguez
  * @version 2.0
  */
-public class Pila_enlazada<E> implements Pila<E>, Iterable<E> {
+public class Cola<E> implements Pila<E>, Iterable<E> {
 
     /**
      * Indicador del tope de la pila
@@ -59,7 +59,7 @@ public class Pila_enlazada<E> implements Pila<E>, Iterable<E> {
      * Crea una nueva pila con top inicializado en null, porque estaría vacía y
      * con size (cantidad de elementos) en 0
      */
-    public Pila_enlazada() {
+    public Cola() {
         top = null;
         size = 0;
     }
