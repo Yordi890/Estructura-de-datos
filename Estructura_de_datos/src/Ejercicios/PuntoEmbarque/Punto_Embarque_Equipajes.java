@@ -48,23 +48,26 @@ public class Punto_Embarque_Equipajes {
 
     private int hallar_menor() {
         double menor = Double.MAX_VALUE; // Solo un número muy grande (esto es una manera de hallar el menor)
-        int pos_menor = -1;
+        int pos_menor = -1; // Necesario inicializarla, pero siempre, siempre va a cambiar
         for (int i = 0; i < 3; i++) {
             if (!punto_E[i].isEmpty() && punto_E[i].peek().getPeso() < menor) {
                 menor = punto_E[i].peek().getPeso();
-                pos_menor = i;
+                pos_menor = i; // Voy guardando la posición de la estera que es la menor
             }
         }
         return pos_menor; // Al final devuelvo la posición de la estera que tiene el menor peso
     }
 
+    public boolean check() {
+        return !punto_E[0].isEmpty() || !punto_E[1].isEmpty() || !punto_E[2].isEmpty();
+    }
+
     public int llenar_Carro(double peso) {
         int cant_equipajes = 0, pos_menor;
         // El while funcionará mientras al menos una estera aún siga teniendo elementos y todavía tenga peso por subir al avión
-        while (peso > 0 && (!punto_E[0].isEmpty() || !punto_E[1].isEmpty() || !punto_E[2].isEmpty())) { // Matemática Discreta
+        while (peso > 0 && check()) { // Matemática Discreta
             pos_menor = hallar_menor(); // Este método devolverá la estera que tiene el menor peso
-            // Aquí empecé a hacer los cambios
-            if (pos_menor != -1 && peso - punto_E[pos_menor].peek().getPeso() >= 0) {
+            if (peso - punto_E[pos_menor].peek().getPeso() >= 0) { // Debatir sobre lo de pos_menor = -1 (que nunca va a ocurrir)
                 peso -= punto_E[pos_menor].poll().getPeso(); // Voy restando al peso el elemento que saque
                 cant_equipajes++; // Al mismo tiempo voy aumentando la cantidad de equipajes que subí al avión
             } else {

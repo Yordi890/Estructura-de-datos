@@ -6,7 +6,7 @@ package Pilas;
 public class Test {
 
     public static void main(String[] args) {
-        Cola<Integer> Pila = new Cola<>();
+        Pila_Enlazada<Integer> Pila = new Pila_Enlazada<>();
 
         // Casos de prueba para el método push
         Pila.push(4);
