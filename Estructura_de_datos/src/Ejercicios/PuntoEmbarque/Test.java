@@ -18,7 +18,6 @@ public class Test {
         P.add(new Equipaje("4444", 10), 2);
         P.add(new Equipaje("5555", 122), 2);
 
-
-        System.out.println("Se subieron " + P.llenar_Carro(40.00) + " equipajes");
+        System.out.println(P.check() ? "Se subieron " + P.llenar_Carro(40.00) + " equipajes" : "Las esteras están vacías");
     }
 }
