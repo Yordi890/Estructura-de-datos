@@ -95,12 +95,12 @@ public class Pila_Enlazada<E> implements Pila<E>, Iterable<E> {
     @Override
     public E pop() {
         if (!isEmpty()) {
-            E item = top.getInfo();
-            top = top.getNext();
-            size--;
-            return item;
+            E item = top.getInfo(); // Guardo la info para saber cuál fue el elemento eliminado
+            top = top.getNext(); // Desplazo el top y así es como consigo eliminarlo
+            size--; // Decremento la cantidad de elementos de la pila
+            return item; // Retorno el elemento que había guardado
         }
-        return null;
+        return null; // Si está vacía retorno null
     }
 
     /**
@@ -153,7 +153,7 @@ public class Pila_Enlazada<E> implements Pila<E>, Iterable<E> {
                 System.out.println("no hay nada");
             }
 
-            cursor = cursor.getNext();
+            cursor = cursor.getNext(); // Voy desplazando el cursor al siguiente elemento hasta llegar al último
         }
 
     }
@@ -162,7 +162,6 @@ public class Pila_Enlazada<E> implements Pila<E>, Iterable<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-
             Nodo<E> cursor = top;
 
             @Override
