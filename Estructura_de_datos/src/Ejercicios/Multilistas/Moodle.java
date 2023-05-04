@@ -31,7 +31,6 @@ public class Moodle {
         for (int i = 0; i < Lista.size(); i++) {
             if (Lista.get(i).getNombre().equalsIgnoreCase(nombre))
                 return false; // Si el nombre de la facultad existe, retorno false
-
         }
 
         // Si llegó aquí es porque la puedo agregar
