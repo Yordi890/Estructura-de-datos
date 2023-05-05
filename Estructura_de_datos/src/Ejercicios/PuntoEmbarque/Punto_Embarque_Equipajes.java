@@ -47,22 +47,6 @@ public class Punto_Embarque_Equipajes {
         };
     }
 
-    private int hallar_menor() {
-        double menor = Double.MAX_VALUE; // Solo un número muy grande (esto es una manera de hallar el menor)
-        int pos_menor = -1; // Necesario inicializarla, pero siempre, siempre va a cambiar
-        for (int i = 0; i < 3; i++) { // Hasta 3 porque son las posiciones del arreglo
-            if (!punto_E[i].isEmpty() && punto_E[i].peek().getPeso() < menor) {
-                menor = punto_E[i].peek().getPeso(); // Si se cumple la condición, mi menor va a hacer el valor del peso de peek en esa posición
-                pos_menor = i; // Voy guardando la posición de la estera que es la menor
-            }
-        }
-        return pos_menor; // Al final devuelvo la posición de la estera que tiene el menor peso
-    }
-
-    public boolean check() { // Matemática Discreta
-        return !punto_E[0].isEmpty() || !punto_E[1].isEmpty() || !punto_E[2].isEmpty(); // Si hay al menos una con elementos retornará true
-    }
-
     /**
      * Devuelve la cantidad de equipajes necesarios para llenar el carro
      *
@@ -84,4 +68,19 @@ public class Punto_Embarque_Equipajes {
         return cant_equipajes; // Al final retorno la cantidad de equipajes que subí
     }
 
+    public boolean check() { // Matemática Discreta
+        return !punto_E[0].isEmpty() || !punto_E[1].isEmpty() || !punto_E[2].isEmpty(); // Si hay al menos una con elementos retornará true
+    }
+
+    private int hallar_menor() {
+        double menor = Double.MAX_VALUE; // Solo un número muy grande (esto es una manera de hallar el menor)
+        int pos_menor = -1; // Necesario inicializarla, pero siempre, siempre va a cambiar
+        for (int i = 0; i < 3; i++) { // Hasta 3 porque son las posiciones del arreglo
+            if (!punto_E[i].isEmpty() && punto_E[i].peek().getPeso() < menor) {
+                menor = punto_E[i].peek().getPeso(); // Si se cumple la condición, mi menor va a hacer el valor del peso de peek en esa posición
+                pos_menor = i; // Voy guardando la posición de la estera que es la menor
+            }
+        }
+        return pos_menor; // Al final devuelvo la posición de la estera que tiene el menor peso
+    }
 }
