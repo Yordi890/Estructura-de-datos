@@ -11,7 +11,7 @@ package Ejercicios.PuntoEmbarque;
 import Cola.Cola_enlazada;
 
 public class Punto_Embarque_Equipajes {
-    private Cola_enlazada<Equipaje>[] punto_E;
+    private final Cola_enlazada<Equipaje>[] punto_E;
 
     public Punto_Embarque_Equipajes() {
         this.punto_E = new Cola_enlazada[]{new Cola_enlazada<Equipaje>(), new Cola_enlazada<Equipaje>(), new Cola_enlazada<Equipaje>()};
@@ -63,6 +63,12 @@ public class Punto_Embarque_Equipajes {
         return !punto_E[0].isEmpty() || !punto_E[1].isEmpty() || !punto_E[2].isEmpty(); // Si hay al menos una con elementos retornará true
     }
 
+    /**
+     * Devuelve la cantidad de equipajes necesarios para llenar el carro
+     *
+     * @param peso que soporta el carro y del cual no se puede sobrepasar
+     * @return int que representa cantidad que fue necesaria para llenar el carro
+     */
     public int llenar_Carro(double peso) {
         int cant_equipajes = 0, pos_menor;
         // El while funcionará mientras al menos una estera aún siga teniendo elementos y todavía tenga peso por subir al avión
