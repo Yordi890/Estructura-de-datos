@@ -308,11 +308,7 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
      * @since 3.0
      */
     private Nodo<E> getNodo_Recursive(Nodo<E> cursor, int i, int index) {
-        if (i < index) {
-            cursor = cursor.getNext();
-            return getNodo_Recursive(cursor, ++i, index);
-        }
-        return cursor;
+        return (i < index) ? getNodo_Recursive(cursor.getNext(), ++i, index) : cursor;
     }
 
     /**

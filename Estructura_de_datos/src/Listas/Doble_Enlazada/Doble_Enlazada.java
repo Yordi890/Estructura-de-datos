@@ -252,7 +252,7 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
             } else if (index == size - 1) { // Si es la última posición retornamos la info de last
                 return last.getInfo();
             }
-            return getNodo(index).getInfo(); // Va a retornar la info del nodo que encuentre, todas las comprobaciones ya se hicieron ...
+            return getNodo_Recursive(first, 0, index).getInfo(); // Va a retornar la info del nodo que encuentre, todas las comprobaciones ya se hicieron ...
         }
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
     }
@@ -280,11 +280,7 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
      * @since 3.0
      */
     private Nodo<E> getNodo_Recursive(Nodo<E> cursor, int i, int index) {
-        if (i < index) {
-            cursor = cursor.getNext();
-            return getNodo_Recursive(cursor, ++i, index);
-        }
-        return cursor;
+        return (i < index) ? getNodo_Recursive(cursor.getNext(), ++i, index) : cursor;
     }
 
     /**
