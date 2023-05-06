@@ -43,7 +43,7 @@ import java.util.function.Consumer;
  * @author Yordanis Tejeda Rodríguez
  * @version 2.0
  */
-public class Cola<E> implements Pila<E>, Iterable<E> {
+public class Pila_Enlazada<E> implements Pila<E>, Iterable<E> {
 
     /**
      * Indicador del tope de la pila
@@ -59,7 +59,7 @@ public class Cola<E> implements Pila<E>, Iterable<E> {
      * Crea una nueva pila con top inicializado en null, porque estaría vacía y
      * con size (cantidad de elementos) en 0
      */
-    public Cola() {
+    public Pila_Enlazada() {
         top = null;
         size = 0;
     }
@@ -95,12 +95,12 @@ public class Cola<E> implements Pila<E>, Iterable<E> {
     @Override
     public E pop() {
         if (!isEmpty()) {
-            E item = top.getInfo();
-            top = top.getNext();
-            size--;
-            return item;
+            E item = top.getInfo(); // Guardo la info para saber cuál fue el elemento eliminado
+            top = top.getNext(); // Desplazo el top y así es como consigo eliminarlo
+            size--; // Decremento la cantidad de elementos de la pila
+            return item; // Retorno el elemento que había guardado
         }
-        return null;
+        return null; // Si está vacía retorno null
     }
 
     /**
@@ -153,7 +153,7 @@ public class Cola<E> implements Pila<E>, Iterable<E> {
                 System.out.println("no hay nada");
             }
 
-            cursor = cursor.getNext();
+            cursor = cursor.getNext(); // Voy desplazando el cursor al siguiente elemento hasta llegar al último
         }
 
     }
@@ -162,7 +162,6 @@ public class Cola<E> implements Pila<E>, Iterable<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-
             Nodo<E> cursor = top;
 
             @Override

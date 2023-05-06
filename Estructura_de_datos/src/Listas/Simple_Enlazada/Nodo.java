@@ -40,8 +40,4 @@ public class Nodo<E> {
         Next = next;
     }
 
-    @Override
-    public String toString() {
-        return "Info: " + Info + " --> Next: " + Next.Info;
-    }
 }

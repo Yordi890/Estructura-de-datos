@@ -6,10 +6,8 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-import Ejercicios.PuntoEmbarque.Equipaje;
-import Ejercicios.PuntoEmbarque.Punto_Embarque_Equipajes;
 import Listas.Simple_Enlazada.Simple_Enlazada;
-import Pilas.Cola;
+import Pilas.Pila_Enlazada;
 
 public class Ejercicios {
 
@@ -25,7 +23,7 @@ public class Ejercicios {
 
         if (cant_a_sacar <= 42) { // Según el ejercicio solo se tiene para dar hasta 42 pesos
 
-            Cola<Integer> cinco = new Cola<>(), tres = new Cola<>(), un_peso = new Cola<>();
+            Pila_Enlazada<Integer> cinco = new Pila_Enlazada<>(), tres = new Pila_Enlazada<>(), un_peso = new Pila_Enlazada<>();
 
             for (int i = 0; i < 4; i++) { // Es hasta 4 porque la pila debe tener 4 billetes de 5, es como lo dice en el ejercicio
                 cinco.push(5);
@@ -94,8 +92,8 @@ public class Ejercicios {
         return true;
     }
 
-    public static Simple_Enlazada<Integer> invertir_Lista(Simple_Enlazada<Integer> Lista) {
-        Cola<Integer> Pila = new Cola<>(); // La pila que usaremos para invertir la lista
+    public static void invertir_Lista(Simple_Enlazada<Integer> Lista) {
+        Pila_Enlazada<Integer> Pila = new Pila_Enlazada<>(); // La pila que usaremos para invertir la lista
 
         int size = Lista.size(); // Se debe guardar la cantidad de elementos porque nos ayudará más adelante
 
@@ -109,10 +107,8 @@ public class Ejercicios {
         }
 
         for (int i = 0; i < size; i++) {
-            Lista.add(Pila.pop());
+            Lista.add(Pila.pop()); // Voy agregando a la lista que ya no contiene elemento lo que voy sacando de la pila y quedaría en orden inverso
         }
-
-        return Lista;
     }
 
     public static void main(String[] args) {
@@ -128,7 +124,7 @@ public class Ejercicios {
         Lista.add(10);
         Lista.add(1);
 
-        Lista = invertir_Lista(Lista);
+        invertir_Lista(Lista);
 
         Lista.forEach(System.out::println);
     }

@@ -1,5 +1,8 @@
 package Listas.Simple_Enlazada;
 
+import Listas.Circular_Doble.Circular_Doble;
+import Listas.Circular_Simple.Circular_Simple;
+import Listas.Doble_Enlazada.Doble_Enlazada;
 import Listas.Persona;
 
 
@@ -23,7 +26,7 @@ public class Test {
         Lista.add(2);
         Lista.add(25);
         Lista.mostrar_estructura();
-        Lista.selectionsort(Lista);
+        Lista.burbuja();
 
         Lista.forEach(System.out::println);
 
