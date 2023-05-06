@@ -355,6 +355,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         }
     }
 
+    // Comentario de prueba para el Git
     public void burbuja() {
         boolean b;
         Nodo<E> cursor = first, cursor2;
