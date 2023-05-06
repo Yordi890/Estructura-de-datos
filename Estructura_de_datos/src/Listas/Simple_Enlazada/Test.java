@@ -26,7 +26,7 @@ public class Test {
         Lista.add(2);
         Lista.add(25);
         Lista.mostrar_estructura();
-        Lista.burbuja();
+        Lista.recursive_bubblesort(Lista.getFirst(), Lista.getFirst().getNext(), 0);
 
         Lista.forEach(System.out::println);
 

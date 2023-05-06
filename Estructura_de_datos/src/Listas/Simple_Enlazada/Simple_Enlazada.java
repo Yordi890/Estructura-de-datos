@@ -356,17 +356,15 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     }
 
     // Comentario de prueba para el Git
-    public void burbuja() {
+    public void bubblesort2() {
         boolean b;
         Nodo<E> cursor = first, cursor2;
         E aux;
         int T = -1;
         do {
             b = false;
-
             cursor2 = cursor.getNext();
             T++;
-
             for (int i = T; i < size - 1; i++) {
                 if ((int) cursor.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                     aux = cursor.getInfo();
@@ -376,10 +374,24 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
                 }
                 cursor2 = cursor2.getNext();
             }
-
             cursor = cursor.getNext();
         } while (b);
+    }
 
+    public void recursive_bubblesort(Nodo<E> cursor, Nodo<E> cursor2, int T) {
+        if (T < size - 1) {
+            E aux;
+            for (int i = T; i < size - 1; i++) {
+                if ((int) cursor.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+                    aux = cursor.getInfo();
+                    cursor.setInfo(cursor2.getInfo());
+                    cursor2.setInfo(aux);
+                }
+                cursor2 = cursor2.getNext();
+            }
+            cursor = cursor.getNext();
+            recursive_bubblesort(cursor, cursor.getNext(), ++T);
+        }
     }
 
     public void selectionsort() { // Funciona, está listo
