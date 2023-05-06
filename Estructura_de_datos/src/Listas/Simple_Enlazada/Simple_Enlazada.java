@@ -335,26 +335,53 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
     public void bubblesort() { // Funciona, está listo
 
-        Nodo<E> cursor = first, cursor2, aux; // El auxiliar nos ayudará a intercambiar los elementos
+
+        Nodo<E> cursor = first, cursor2;
+
+        E aux; // Nos ayudará a intercambiar los elementos
 
         for (int i = 0; i < size - 1; i++) {
 
             cursor2 = cursor.getNext();
-
             for (int j = i + 1; j < size; j++) {
-                if ((int) cursor.getInfo() > (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
-                    aux = cursor;
+                if ((int) cursor.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+                    aux = cursor.getInfo();
                     cursor.setInfo(cursor2.getInfo());
-                    cursor2.setInfo(aux.getInfo());
+                    cursor2.setInfo(aux);
+                }
+                cursor2 = cursor2.getNext();
+            }
+            cursor = cursor.getNext();
+        }
+    }
+
+    public void burbuja() {
+        boolean b;
+        Nodo<E> cursor = first, cursor2;
+        E aux;
+        int T = -1;
+        do {
+            b = false;
+
+            cursor2 = cursor.getNext();
+            T++;
+
+            for (int i = T; i < size - 1; i++) {
+                if ((int) cursor.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+                    aux = cursor.getInfo();
+                    cursor.setInfo(cursor2.getInfo());
+                    cursor2.setInfo(aux);
+                    b = true;
                 }
                 cursor2 = cursor2.getNext();
             }
 
             cursor = cursor.getNext();
-        }
+        } while (b);
+
     }
 
-    public void selectionsort(Simple_Enlazada<Integer> Lista) { // Funciona, está listo
+    public void selectionsort() { // Funciona, está listo
 
         Nodo<E> cursor = first, cursor2, min_max;
         E aux;
