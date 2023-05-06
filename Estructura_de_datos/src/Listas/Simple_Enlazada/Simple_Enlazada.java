@@ -334,14 +334,10 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     // Métodos de ordenamiento
 
     public void bubblesort() { // Funciona, está listo
-
-
         Nodo<E> cursor = first, cursor2;
-
         E aux; // Nos ayudará a intercambiar los elementos
 
         for (int i = 0; i < size - 1; i++) {
-
             cursor2 = cursor.getNext();
             for (int j = i + 1; j < size; j++) {
                 if ((int) cursor.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
@@ -355,15 +351,14 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         }
     }
 
-    // Comentario de prueba para el Git
     public void bubblesort2() {
-        boolean b;
         Nodo<E> cursor = first, cursor2;
         E aux;
         int T = -1;
+        boolean b;
         do {
-            b = false;
             cursor2 = cursor.getNext();
+            b = false;
             T++;
             for (int i = T; i < size - 1; i++) {
                 if ((int) cursor.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
@@ -378,10 +373,10 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         } while (b);
     }
 
-    public void recursive_bubblesort(Nodo<E> cursor, Nodo<E> cursor2, int T) {
-        if (T < size - 1) {
+    public void recursive_bubblesort(Nodo<E> cursor, Nodo<E> cursor2, int pos) {
+        if (pos < size - 1) {
             E aux;
-            for (int i = T; i < size - 1; i++) {
+            for (int i = pos; i < size - 1; i++) {
                 if ((int) cursor.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                     aux = cursor.getInfo();
                     cursor.setInfo(cursor2.getInfo());
@@ -390,12 +385,11 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
                 cursor2 = cursor2.getNext();
             }
             cursor = cursor.getNext();
-            recursive_bubblesort(cursor, cursor.getNext(), ++T);
+            recursive_bubblesort(cursor, cursor.getNext(), ++pos);
         }
     }
 
     public void selectionsort() { // Funciona, está listo
-
         Nodo<E> cursor = first, cursor2, min_max;
         E aux;
 
@@ -442,25 +436,34 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     }
 
 
-    public void countingsort() { // Todavía le falta, no está listo
-        Nodo<E> cursor = first, min = first, max = first;
+    public void countingsort() { // Funciona, está listo
+        Nodo<E> cursor = first.getNext(), max = first;
 
-        for (int i = 0; i < size; i++) {
-
-            if ((int) cursor.getInfo() < (int) min.getInfo()) {
-                min = cursor;
-            }
-
+        for (int i = 1; i < size; i++) {
             if ((int) cursor.getInfo() > (int) max.getInfo()) {
                 max = cursor;
             }
-
             cursor = cursor.getNext();
         }
 
+        int[] Arr = new int[(int) max.getInfo() + 1];
 
+        cursor = first;
+        for (int i = 0; i < size; i++) {
+            Arr[(int) cursor.getInfo()]++;
+            cursor = cursor.getNext();
+        }
+
+        this.clear();
+
+        for (int i = 0; i < Arr.length; i++) { // De menor a mayor --> int i = 0; i < Arr.length; i++ || De mayor a menor --> int i = Arr.length - 1; i > 0; i--
+            if (Arr[i] != 0) {
+                for (int j = 0; j < Arr[i]; j++) {
+                    this.add((E) (Integer) i);
+                }
+            }
+        }
     }
-
 
     public void bucketsort() {
 
