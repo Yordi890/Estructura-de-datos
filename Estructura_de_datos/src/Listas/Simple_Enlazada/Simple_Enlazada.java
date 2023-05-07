@@ -448,13 +448,10 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
         int[] Arr = new int[(int) max.getInfo() + 1];
 
-        cursor = first;
-        for (int i = 0; i < size; i++) {
-            Arr[(int) cursor.getInfo()]++;
-            cursor = cursor.getNext();
+        int T = size;
+        for (int i = 0; i < T; i++) {
+            Arr[(int) this.remove(0)]++;
         }
-
-        this.clear();
 
         for (int i = 0; i < Arr.length; i++) { // De menor a mayor --> int i = 0; i < Arr.length; i++ || De mayor a menor --> int i = Arr.length - 1; i > 0; i--
             if (Arr[i] != 0) {
