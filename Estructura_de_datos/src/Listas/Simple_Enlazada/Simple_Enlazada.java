@@ -353,7 +353,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
     public void bubblesort2() {
         Nodo<E> cursor = first, cursor2;
-        E aux;
+        E aux; // Nos ayudará a intercambiar los elementos
         int T = -1;
         boolean b;
         do {
@@ -375,7 +375,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
     public void recursive_bubblesort(Nodo<E> cursor, Nodo<E> cursor2, int pos) {
         if (pos < size - 1) {
-            E aux;
+            E aux; // Nos ayudará a intercambiar los elementos
             for (int i = pos; i < size - 1; i++) {
                 if ((int) cursor.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                     aux = cursor.getInfo();
@@ -391,7 +391,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
     public void selectionsort() { // Funciona, está listo
         Nodo<E> cursor = first, cursor2, min_max;
-        E aux;
+        E aux; // Nos ayudará a intercambiar los elementos
 
         for (int i = 0; i < size - 1; i++) {
 
@@ -414,9 +414,8 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
     }
 
-    public void insertionsort() { // Funciona, está listo
+    public void insertionsort() { // Funciona, está listo  /// Tratar de mejorarlo
         Nodo<E> cursor = first.getNext(), cursor2;
-
         int pos;
 
         for (int i = 1; i < size; i++) { // Se puede empezar en 1 porque comienzo en first.getNext(), o sea el segundo que para nosotros sería en 1
@@ -424,17 +423,57 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
             cursor2 = first;
             pos = 0;
 
-            while ((int) cursor.getInfo() > (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+            while ((int) cursor2.getInfo() < (int) cursor.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                 cursor2 = cursor2.getNext();
                 pos++;
             }
 
-            add(remove(i), pos);
+            if (i != pos) // No tiene sentido hacer el procedimiento si el cursor2 llego a donde mismo el cursor
+                add(remove(i), pos);
 
-            cursor = cursor.getNext();
+            cursor = cursor.getNext(); // Tener en cuenta lo que pasa con este cursor (que no cambia cuando se elimina)
         }
     }
 
+    public void shellsort() { // Todavía no está listo
+        int T = size, lim;
+        Nodo<E> cursor, cursor2, cursor3;
+        E aux; // Nos ayudará a intercambiar los elementos
+
+        do {
+            T /= 2;
+
+            for (int i = 0; i < T; i++) {
+
+                cursor3 = first;
+
+                for (int j = 0; j < T; j++) {
+
+                    cursor = cursor2 = cursor3;
+                    lim = T;
+
+                    while (lim < size) {
+
+                        for (int k = 0; k < T; k++) {
+                            cursor2 = cursor2.getNext();
+                        }
+
+                        lim += T;
+
+                        if ((int) cursor.getInfo() > (int) cursor2.getInfo()) {
+                            aux = cursor2.getInfo();
+                            cursor2.setInfo(cursor.getInfo());
+                            cursor.setInfo(aux);
+                        }
+
+                        cursor = cursor2;
+                    }
+                    cursor3 = cursor3.getNext();
+                }
+            }
+
+        } while (T != 1);
+    }
 
     public void countingsort() { // Funciona, está listo
         Nodo<E> cursor = first.getNext(), max = first;

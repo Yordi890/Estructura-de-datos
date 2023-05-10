@@ -64,11 +64,15 @@ public class Cola_enlazada<E> implements Cola<E>, Iterable<E> {
     private int size;
 
     /**
-     * Crea una nueva lista con first y last inicializados en null, porque estaría vacía y size (cantidad de elementos) en 0
+     * Crea una nueva cola con first y last inicializados en null, porque estaría vacía y size (cantidad de elementos) en 0
      */
     public Cola_enlazada() {
         first = last = null;
         size = 0;
+    }
+
+    public Nodo<E> getFirst() {
+        return first;
     }
 
     /**

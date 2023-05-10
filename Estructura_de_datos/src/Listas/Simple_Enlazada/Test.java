@@ -15,18 +15,27 @@ public class Test {
 
         Simple_Enlazada<Integer> Lista = new Simple_Enlazada<>();
 
-        Lista.add(5);
-        Lista.add(9);
-        Lista.add(8);
-        Lista.add(14);
-        Lista.add(2);
-        Lista.add(4);
         Lista.add(20);
-        Lista.add(1);
+        Lista.add(12);
+        Lista.add(65);
+        Lista.add(8);
+        Lista.add(10);
+        Lista.add(16);
+        Lista.add(43);
+        Lista.add(35);
+        Lista.add(23);
+        Lista.add(88);
         Lista.add(2);
-        Lista.add(25);
+        Lista.add(56);
+        Lista.add(41);
+        Lista.add(27);
+        Lista.add(67);
+        Lista.add(56);
+        Lista.add(44);
+        Lista.add(84);
+
         Lista.mostrar_estructura();
-        Lista.countingsort();
+        Lista.shellsort();
 
         Lista.forEach(System.out::println);
 
