@@ -19,26 +19,10 @@ public class Test {
         Lista.add(12);
         Lista.add(65);
         Lista.add(8);
-        Lista.add(10);
-        Lista.add(16);
-        Lista.add(43);
-        Lista.add(35);
-        Lista.add(23);
-        Lista.add(88);
-        Lista.add(56);
-        Lista.add(2);
-        Lista.add(56);
-        Lista.add(41);
-        Lista.add(27);
-        Lista.add(67);
-        Lista.add(56);
-        Lista.add(44);
-        Lista.add(84);
+        Lista.add(10, 2);
         Lista.mostrar_estructura();
-        Lista.bucketsort(Lista);
 
         Lista.forEach(System.out::println);
-
         /*
         // Casos de prueba para el método add normal
         Lista.add(new Persona("0000", "Yordanis", "Tejeda", 20));

@@ -1,6 +1,7 @@
 package Listas.Simple_Enlazada;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.function.Consumer;
 
 /**
@@ -157,11 +158,8 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
                   que queremos añadir un nuevo nodo, de esta forma se desplazan las posiciones y queda que el nuevo
                   nodo ocupa la decisión deseada porque desplaza al siguiente
                  */
-                Nodo<E> cursor = first;
-                for (int i = 0; i < index - 1; i++) {
-                    cursor = cursor.getNext();
-                }
-                cursor.setNext(new Nodo<>(e, cursor.getNext()));
+                Nodo<E> aux = getNodo(index - 1);
+                aux.setNext(new Nodo<>(e, aux.getNext()));
             }
             size++; // Siempre se incrementará, en cualquiera de los casos
         } else {
@@ -182,11 +180,8 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         if (index >= 0 && index < size) { // Para verificar que index esté en el rango posible
             Nodo<E> aux; // Nos va a ayudar a saber cuál fue el elemento eliminado
             if (index != 0) {
-                Nodo<E> cursor = first;
-                for (int i = 0; i < index - 1; i++) {
-                    cursor = cursor.getNext(); // Desplazándonos
-                }
-                aux = cursor.getNext(); // Para luego saber cuál fue el elemento eliminado
+                Nodo<E> cursor = getNodo(index - 1);
+                aux = cursor.getNext();
                 /*
                   Nos desplazamos hasta el elemento que ocupa la posición anterior a la que queremos
                   eliminar y una vez ahí indicamos el siguiente nodo del nodo sobre el cual estamos
@@ -252,22 +247,12 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
             } else if (index == size - 1) { // Si es la última posición retornamos la info de last
                 return last.getInfo();
             }
-            /*
-              Declaramos un nodo al cual le llamaremos cursor para ir desplazándonos hasta
-              llegar al elemento de la posición a la cual queremos obtener su información,
-              una vez ahí retornamos la información de dicho cursor
-             */
-            Nodo<E> cursor = first;
-            for (int i = 0; i < index; i++) {
-                cursor = cursor.getNext(); // Nos estamos desplazando hasta la posición del elemento
-            }
-
-            return cursor.getInfo(); // Una vez ubicados retornamos la info del cursor
+            return getNodo(index).getInfo(); // Una vez ubicados retornamos la info del cursor
         }
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
     }
 
-    public Nodo<E> getNodo(int index) {
+    private Nodo<E> getNodo(int index) {
         Nodo<E> cursor = first;
         for (int i = 0; i < index; i++) {
             cursor = cursor.getNext();
@@ -381,11 +366,11 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         } while (b);
     }
 
-    public void recursive_bubblesort(Nodo<E> cursor, Nodo<E> cursor2, int pos) {
+    public void recursive_bubble_sort(Nodo<Integer> cursor, Nodo<Integer> cursor2, int pos) {
         if (pos < size - 1) {
-            E aux; // Nos ayudará a intercambiar los elementos
+            Integer aux; // Nos ayudará a intercambiar los elementos
             for (int i = pos; i < size - 1; i++) {
-                if ((int) cursor.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+                if (cursor.getInfo() < cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                     aux = cursor.getInfo();
                     cursor.setInfo(cursor2.getInfo());
                     cursor2.setInfo(aux);
@@ -393,7 +378,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
                 cursor2 = cursor2.getNext();
             }
             cursor = cursor.getNext();
-            recursive_bubblesort(cursor, cursor.getNext(), ++pos);
+            recursive_bubble_sort(cursor, cursor.getNext(), ++pos);
         }
     }
 
@@ -406,8 +391,8 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
             min_max = cursor; // Le llamé min_max para no tener que estar cambiándole el nombre cada vez que quiera cambiar el sentido de la ordenación
             cursor2 = cursor.getNext();
 
-            for (int j = i + 1; j < size; j++) {
-                if ((int) min_max.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+            for (int j = i + 1; j < Lista.size(); j++) {
+                if (min_max.getInfo() < cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                     min_max = cursor2;
                 }
                 cursor2 = cursor2.getNext();
@@ -426,7 +411,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         Nodo<Integer> cursor = Lista.getFirst().getNext(), cursor2;
         int pos;
 
-        for (int i = 1; i < size; i++) { // Se puede empezar en 1 porque comienzo en first.getNext(), o sea el segundo que para nosotros sería en 1
+        for (int i = 1; i < Lista.size(); i++) { // Se puede empezar en 1 porque comienzo en first.getNext(), o sea el segundo que para nosotros sería en 1
 
             cursor2 = Lista.getFirst();
             pos = 0;
@@ -437,7 +422,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
             }
 
             if (i != pos) // No tiene sentido hacer el procedimiento si el cursor2 llego a donde mismo el cursor
-                add(remove(i), pos);
+                Lista.add(Lista.remove(i), pos);
 
             cursor = cursor.getNext(); // Tener en cuenta lo que pasa con este cursor (que no cambia cuando se elimina)
         }
@@ -446,7 +431,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     public void counting_sort(Simple_Enlazada<Integer> Lista) { // Funciona, está listo
         Nodo<Integer> cursor = Lista.getFirst().getNext(), max = Lista.getFirst();
 
-        for (int i = 1; i < size; i++) {
+        for (int i = 1; i < Lista.size(); i++) {
             if (cursor.getInfo() > max.getInfo()) {
                 max = cursor;
             }
@@ -455,15 +440,15 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
         int[] Arr = new int[max.getInfo() + 1];
 
-        int T = size;
+        int T = Lista.size();
         for (int i = 0; i < T; i++) {
-            Arr[(int) this.remove(0)]++;
+            Arr[Lista.remove(0)]++;
         }
 
         for (int i = 0; i < Arr.length; i++) { // De menor a mayor --> int i = 0; i < Arr.length; i++ || De mayor a menor --> int i = Arr.length - 1; i > 0; i--
             if (Arr[i] != 0) {
                 for (int j = 0; j < Arr[i]; j++) {
-                    this.add((E) (Integer) i);
+                    Lista.add(i);
                 }
             }
         }
@@ -504,7 +489,61 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         } while (izq < der);
     }
 
-    public void bucketsort(Simple_Enlazada<Integer> Lista) {
+    public void shell_sort(Simple_Enlazada<Integer> Lista) {
+        int salto = Lista.size() / 2, j, k, aux;
+
+        while (salto > 0) {
+            for (int i = salto; i < Lista.size(); i++) {
+                j = i - salto;
+                while (j >= 0) {
+                    k = j + salto;
+                    if (Lista.get(j) > Lista.get(k)) {
+                        aux = Lista.get(j);
+                        Lista.getNodo(j).setInfo(Lista.get(k));
+                        Lista.getNodo(k).setInfo(aux);
+                        j -= salto;
+                    } else {
+                        j--;
+                    }
+                }
+            }
+            salto /= 2;
+        }
+
+    }
+
+    public static void mergeSort(LinkedList<Integer> list, int izq, int der) {
+        if (izq >= der) {
+            return;
+        }
+        int middle = (izq + der) / 2;
+        mergeSort(list, izq, middle);
+        mergeSort(list, middle + 1, der);
+        merge(list, izq, middle, der);
+    }
+
+    private static void merge(LinkedList<Integer> list, int low, int middle, int high) {
+        int IstList_end = middle, IIndList_start = middle + 1, l = low;
+
+        // Aqui empece a hacer los cambios
+        while ((l <= IstList_end) && (IIndList_start <= high)) {
+            if (list.get(low) < list.get(IIndList_start)) {
+                low++;
+            } else {
+                int temp = list.get(IIndList_start);
+                for (int j = IIndList_start - 1; j >= low; j--) {
+                    list.set(list.get(j), j + 1);
+                }
+                list.set(temp, low);
+                low++;
+                IstList_end++;
+                IIndList_start++;
+            }
+        }
+    }
+
+    // Métodos de ordenación que aún no están listos
+    public void bucket_sort(Simple_Enlazada<Integer> Lista) { // Todavía no está listo
         int menor = Lista.get(0), mayor = Lista.get(0);
 
         for (Integer valor : Lista) {
@@ -526,47 +565,6 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         }
 
     }
-
-    public void shellsort() { // Todavía no está listo
-        int T = size, lim;
-        Nodo<E> cursor, cursor2, cursor3;
-        E aux; // Nos ayudará a intercambiar los elementos
-
-        do {
-            T /= 2;
-
-            for (int i = 0; i < T; i++) {
-
-                cursor3 = first;
-
-                for (int j = 0; j < T; j++) {
-
-                    cursor = cursor2 = cursor3;
-                    lim = T;
-
-                    while (lim < size) {
-
-                        for (int k = 0; k < T; k++) {
-                            cursor2 = cursor2.getNext();
-                        }
-
-                        lim += T;
-
-                        if ((int) cursor.getInfo() > (int) cursor2.getInfo()) {
-                            aux = cursor2.getInfo();
-                            cursor2.setInfo(cursor.getInfo());
-                            cursor.setInfo(aux);
-                        }
-
-                        cursor = cursor2;
-                    }
-                    cursor3 = cursor3.getNext();
-                }
-            }
-
-        } while (T != 1);
-    }
-
 
     // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override

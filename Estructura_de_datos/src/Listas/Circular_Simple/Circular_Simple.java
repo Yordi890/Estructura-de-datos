@@ -138,7 +138,6 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
         if (index >= 0 && index <= size) {
             if (index == 0) {
                 /*
-                
                   Si la lista está vacía hay que tratarlo de otra forma porque si no da error!!!!
                 
                   Lo que se ve abajo es un operador ternario, su funcionamiento es el de un if, en este si se cumple, en este
@@ -160,10 +159,8 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
                 last.setNext(new Nodo<>(e, first));
                 last = last.getNext();
             } else {
-                Nodo<E> cursor = first;
-                for (int i = 0; i < index - 1; i++) {
-                    cursor = cursor.getNext(); // Desplazándonos hasta la posición anterior donde queremos agregar un nuevo elemento
-                }
+                Nodo<E> aux = getNodo(index - 1);
+                aux.setNext(new Nodo<>(e, aux.getNext()));
                 /*
                   Una vez ubicados en el elemento que ocupa la posición anterior en donde queremos agregar un elemento nuevo
                   decimos que el siguiente de cursor va a ser un nuevo nodo el cual va a tener como información la que viene por parámetro
@@ -171,7 +168,6 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
                   del cursor y quedando así en la posición deseada
                  */
 
-                cursor.setNext(new Nodo<>(e, cursor.getNext()));
             }
             size++; // Siempre se incrementará, en cualquiera de los casos
         } else {
@@ -201,10 +197,7 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
                 first = first.getNext();
                 last.setNext(first);
             } else {
-                Nodo<E> cursor = first;
-                for (int i = 0; i < index - 1; i++) {
-                    cursor = cursor.getNext();
-                }
+                Nodo<E> cursor = getNodo(index - 1);
                 aux = cursor.getNext();
                 cursor.setNext(aux.getNext()); // Nos apoyamos en aux para no tener que hacer un doble uso del método getNext()
 
@@ -262,14 +255,17 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
               llegar al elemento de la posición a la cual queremos obtener su información,
               una vez ahí retornamos la información de dicho cursor
              */
-            Nodo<E> cursor = first;
-            for (int i = 0; i < index; i++) {
-                cursor = cursor.getNext(); // Nos estamos desplazando hasta la posición del elemento
-            }
-
-            return cursor.getInfo(); // Una vez ubicados retornamos la info del cursor
+            return getNodo(index).getInfo(); // Una vez ubicados retornamos la info del cursor
         }
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+    }
+
+    public Nodo<E> getNodo(int index) {
+        Nodo<E> cursor = first;
+        for (int i = 0; i < index; i++) {
+            cursor = cursor.getNext(); // Nos estamos desplazando hasta la posición del elemento
+        }
+        return cursor;
     }
 
     /**

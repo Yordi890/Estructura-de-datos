@@ -150,7 +150,7 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
                     añadir en la posición 1 (la segunda para nosotros) se trata de añadir como si fuera un método add normal
                     solo que para que preguntar si está vacía o no (si hace esto nunca estará vacía), por lo que siempre se iría
                     por el mismo camino por eso lo hago aquí mismo
-                 */
+                */
                 last.setNext(new Nodo<>(e, last, null));
                 last = last.getNext();
             } else if (index == size - 1) {
@@ -161,6 +161,7 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
                    ese momento, quedando el nuevo nodo entre los dos ocupando la penúltima posición como debe ser, luego hay que actualizar el
                    puntero de last para que apunte al nuevo nodo
                  */
+
                 last.getPrev().setNext(new Nodo<>(e, last.getPrev(), last));
                 last.setPrev(last.getPrev().getNext());
             } else {
@@ -252,7 +253,7 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
             } else if (index == size - 1) { // Si es la última posición retornamos la info de last
                 return last.getInfo();
             }
-            return getNodo_Recursive(first, 0, index).getInfo(); // Va a retornar la info del nodo que encuentre, todas las comprobaciones ya se hicieron ...
+            return getNodo(index).getInfo(); // Va a retornar la info del nodo que encuentre, todas las comprobaciones ya se hicieron ...
         }
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
     }
