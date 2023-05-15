@@ -14,34 +14,40 @@ import Cola.Nodo;
 public class Test {
 
     public static int encontrar_menor(Cola_enlazada<Integer> Cola) {
-        int menor = Integer.MAX_VALUE, size = Cola.size(), valor_actual;
+        int menor = Integer.MAX_VALUE, valor_actual;
         for (int i = 0; i < Cola.size(); i++) {
-            Cola.add(valor_actual = Cola.poll());
-            if (valor_actual < menor) {
-                menor = valor_actual;
+            valor_actual = Cola.poll(); // Saco el elemento de la cola
+            if (valor_actual < menor) {// Hago la comparación
+                menor = valor_actual;// Si es menor pasa a ser mi menor
             }
+            Cola.add(valor_actual); // Lo vuelvo a agregar a la cola
         }
-        return menor;
+        return menor; // Al final retorno quien fue el menor
     }
 
     public static int encontrar_mayor(Cola_enlazada<Integer> Cola) {
-        int mayor = Integer.MIN_VALUE, size = Cola.size(), valor_actual;
-        for (int i = 0; i < size; i++) {
-            Cola.add(valor_actual = Cola.poll());
-            if (valor_actual > mayor) {
-                mayor = valor_actual;
+        int mayor = 0, valor_actual;
+        for (int i = 0; i < Cola.size(); i++) {
+            valor_actual = Cola.poll(); // Saco el elemento de la cola
+            if (valor_actual > mayor) {// Hago la comparación
+                mayor = valor_actual;// Si es mayor pasa a ser mi mayor
             }
+            Cola.add(valor_actual); // Lo vuelvo a agregar a la cola
         }
-        return mayor;
+        return mayor; // Al final retorno quien fue el mayor
     }
 
     public static int suma_hasta(Cola_enlazada<Integer> Cola, int n) {
-        Nodo<Integer> cursor = Cola.getFirst();
-        int suma = 0;
+        int valor_actual, suma = 0;
         for (int i = 0; i <= n; i++) {
-            suma += cursor.getInfo();
-            cursor = cursor.getNext();
+            suma += valor_actual = Cola.poll();
+            Cola.add(valor_actual);
         }
+
+        for (int i = 0; i < (Cola.size() - n - 1); i++) {
+            Cola.add(Cola.poll());
+        }
+
         return suma;
     }
 
@@ -53,8 +59,8 @@ public class Test {
         Cola.add(2);
         Cola.add(9);
 
-        //  System.out.println("El mayor es " + encontrar_mayor(Cola));
-        //  System.out.println("El menor es " + encontrar_menor(Cola));
+        System.out.println("El mayor es " + encontrar_mayor(Cola));
+        System.out.println("El menor es " + encontrar_menor(Cola));
         System.out.println("La suma es " + suma_hasta(Cola, 2));
 
         Cola.forEach(System.out::println);

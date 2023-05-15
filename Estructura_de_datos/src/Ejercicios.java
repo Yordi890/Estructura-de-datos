@@ -95,18 +95,11 @@ public class Ejercicios {
     public static void invertir_Lista(Simple_Enlazada<Integer> Lista) {
         Pila_Enlazada<Integer> Pila = new Pila_Enlazada<>(); // La pila que usaremos para invertir la lista
 
-        int size = Lista.size(); // Se debe guardar la cantidad de elementos porque nos ayudará más adelante
-
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < Lista.size() + i; i++) {
             Pila.push(Lista.remove(0));
-            /*
-             * El objetivo de guardar la cantidad de elementos de la lista en una variable
-             * es porque cuando se empiece a usar el método remove la lista comenzará a disminuir
-             * la cantidad de elementos lo que haría que no se eliminaría todos los elementos
-             */
         }
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < Pila.size() + i; i++) {
             Lista.add(Pila.pop()); // Voy agregando a la lista que ya no contiene elemento lo que voy sacando de la pila y quedaría en orden inverso
         }
     }

@@ -25,6 +25,7 @@ public class Test {
         Lista.add(35);
         Lista.add(23);
         Lista.add(88);
+        Lista.add(56);
         Lista.add(2);
         Lista.add(56);
         Lista.add(41);
@@ -33,9 +34,8 @@ public class Test {
         Lista.add(56);
         Lista.add(44);
         Lista.add(84);
-
         Lista.mostrar_estructura();
-        Lista.shellsort();
+        Lista.bucketsort(Lista);
 
         Lista.forEach(System.out::println);
 

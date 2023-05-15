@@ -267,6 +267,14 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
     }
 
+    public Nodo<E> getNodo(int index) {
+        Nodo<E> cursor = first;
+        for (int i = 0; i < index; i++) {
+            cursor = cursor.getNext();
+        }
+        return cursor;
+    }
+
     /**
      * Nos permite saber si la lista está vacía
      *
@@ -333,14 +341,14 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
     // Métodos de ordenamiento
 
-    public void bubblesort() { // Funciona, está listo
-        Nodo<E> cursor = first, cursor2;
-        E aux; // Nos ayudará a intercambiar los elementos
+    public void bubble_sort(Simple_Enlazada<Integer> Lista) { // Funciona, está listo
+        Nodo<Integer> cursor = Lista.getFirst(), cursor2;
+        Integer aux; // Nos ayudará a intercambiar los elementos
 
         for (int i = 0; i < size - 1; i++) {
             cursor2 = cursor.getNext();
             for (int j = i + 1; j < size; j++) {
-                if ((int) cursor.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+                if (cursor.getInfo() < cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                     aux = cursor.getInfo();
                     cursor.setInfo(cursor2.getInfo());
                     cursor2.setInfo(aux);
@@ -351,9 +359,9 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         }
     }
 
-    public void bubblesort2() {
-        Nodo<E> cursor = first, cursor2;
-        E aux; // Nos ayudará a intercambiar los elementos
+    public void bubble_sort2(Simple_Enlazada<Integer> Lista) {
+        Nodo<Integer> cursor = Lista.getFirst(), cursor2;
+        Integer aux; // Nos ayudará a intercambiar los elementos
         int T = -1;
         boolean b;
         do {
@@ -361,7 +369,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
             b = false;
             T++;
             for (int i = T; i < size - 1; i++) {
-                if ((int) cursor.getInfo() < (int) cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+                if (cursor.getInfo() < cursor2.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                     aux = cursor.getInfo();
                     cursor.setInfo(cursor2.getInfo());
                     cursor2.setInfo(aux);
@@ -389,9 +397,9 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         }
     }
 
-    public void selectionsort() { // Funciona, está listo
-        Nodo<E> cursor = first, cursor2, min_max;
-        E aux; // Nos ayudará a intercambiar los elementos
+    public void selection_sort(Simple_Enlazada<Integer> Lista) { // Funciona, está listo
+        Nodo<Integer> cursor = Lista.getFirst(), cursor2, min_max;
+        Integer aux; // Nos ayudará a intercambiar los elementos
 
         for (int i = 0; i < size - 1; i++) {
 
@@ -414,16 +422,16 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
     }
 
-    public void insertionsort() { // Funciona, está listo  /// Tratar de mejorarlo
-        Nodo<E> cursor = first.getNext(), cursor2;
+    public void insertion_sort(Simple_Enlazada<Integer> Lista) { // Funciona, está listo  /// Tratar de mejorarlo
+        Nodo<Integer> cursor = Lista.getFirst().getNext(), cursor2;
         int pos;
 
         for (int i = 1; i < size; i++) { // Se puede empezar en 1 porque comienzo en first.getNext(), o sea el segundo que para nosotros sería en 1
 
-            cursor2 = first;
+            cursor2 = Lista.getFirst();
             pos = 0;
 
-            while ((int) cursor2.getInfo() < (int) cursor.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
+            while (cursor2.getInfo() < cursor.getInfo()) { // Para cambiar el orden solo hay que cambiar el signo de comparación
                 cursor2 = cursor2.getNext();
                 pos++;
             }
@@ -433,6 +441,90 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
             cursor = cursor.getNext(); // Tener en cuenta lo que pasa con este cursor (que no cambia cuando se elimina)
         }
+    }
+
+    public void counting_sort(Simple_Enlazada<Integer> Lista) { // Funciona, está listo
+        Nodo<Integer> cursor = Lista.getFirst().getNext(), max = Lista.getFirst();
+
+        for (int i = 1; i < size; i++) {
+            if (cursor.getInfo() > max.getInfo()) {
+                max = cursor;
+            }
+            cursor = cursor.getNext();
+        }
+
+        int[] Arr = new int[max.getInfo() + 1];
+
+        int T = size;
+        for (int i = 0; i < T; i++) {
+            Arr[(int) this.remove(0)]++;
+        }
+
+        for (int i = 0; i < Arr.length; i++) { // De menor a mayor --> int i = 0; i < Arr.length; i++ || De mayor a menor --> int i = Arr.length - 1; i > 0; i--
+            if (Arr[i] != 0) {
+                for (int j = 0; j < Arr[i]; j++) {
+                    this.add((E) (Integer) i);
+                }
+            }
+        }
+    }
+
+    public void cocktail_sort(Simple_Enlazada<Integer> Lista) { // Está listo, funciona
+        int izq = 0, der = Lista.size() - 1, aux; // Nos ayudará a intercambiar los elementos
+        /*
+            Para establecer un orden de ordenamiento correcto las condiciones de los if
+            dentro de cada for deben estar en sentido contrario
+
+            De mayor a menor :
+            Condición 1er if : <
+            Condición 2nd if : >
+
+            De menor a mayor:
+            Condición 1er if : >
+            Condición 2nd if : <
+         */
+        do {
+            for (int i = izq; i < der; i++) {
+                if (Lista.get(i) > Lista.get(i + 1)) {
+                    aux = Lista.get(i + 1);
+                    Lista.getNodo(i + 1).setInfo(Lista.get(i));
+                    Lista.getNodo(i).setInfo(aux);
+                }
+            }
+            izq++;
+
+            for (int i = der - 1; i >= izq; i--) {
+                if (Lista.get(i) < Lista.get(i - 1)) {
+                    aux = Lista.get(i);
+                    Lista.getNodo(i).setInfo(Lista.get(i - 1));
+                    Lista.getNodo(i - 1).setInfo(aux);
+                }
+            }
+            der--;
+        } while (izq < der);
+    }
+
+    public void bucketsort(Simple_Enlazada<Integer> Lista) {
+        int menor = Lista.get(0), mayor = Lista.get(0);
+
+        for (Integer valor : Lista) {
+            if (valor > mayor) {
+                mayor = valor;
+            }
+        }
+
+        int cant_casilleros = mayor / 10;
+
+        Simple_Enlazada<Simple_Enlazada<Integer>> casilleros = new Simple_Enlazada<>();
+
+        for (int i = 0; i < cant_casilleros; i++) {
+            casilleros.add(new Simple_Enlazada<>());
+        }
+
+        for (int i = 0; i < cant_casilleros; i++) {
+
+        }
+
     }
 
     public void shellsort() { // Todavía no está listo
@@ -475,41 +567,6 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         } while (T != 1);
     }
 
-    public void countingsort() { // Funciona, está listo
-        Nodo<E> cursor = first.getNext(), max = first;
-
-        for (int i = 1; i < size; i++) {
-            if ((int) cursor.getInfo() > (int) max.getInfo()) {
-                max = cursor;
-            }
-            cursor = cursor.getNext();
-        }
-
-        int[] Arr = new int[(int) max.getInfo() + 1];
-
-        int T = size;
-        for (int i = 0; i < T; i++) {
-            Arr[(int) this.remove(0)]++;
-        }
-
-        for (int i = 0; i < Arr.length; i++) { // De menor a mayor --> int i = 0; i < Arr.length; i++ || De mayor a menor --> int i = Arr.length - 1; i > 0; i--
-            if (Arr[i] != 0) {
-                for (int j = 0; j < Arr[i]; j++) {
-                    this.add((E) (Integer) i);
-                }
-            }
-        }
-    }
-
-    public void bucketsort() {
-
-        /*
-           Consiste en dividir la lista por casilleros y luego aplicar un método de ordenamiento
-           en cada uno de ellos y luego concatenarlos (puede ser uno diferente en cada casillero)
-         */
-
-
-    }
 
     // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override
