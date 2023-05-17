@@ -141,60 +141,23 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
     @Override
     public void add(E e, int index) {
         if (index >= 0 && index <= size) {
-
-            if (index == 0) {
-                // Si la lista está vacía hay que tratarlo de una forma u otra porque sino da error!!!!
-                if (isEmpty()) {
-                    /* Si está vacía se hace como un método add normal, pero como siempre
-                       va a ir por el mismo camino y para no volver a preguntar si la lista está vacía
-                       lo hago aquí mismo
-                     */
-                    first = last = new Nodo<>(e);
-                    first.setNext(first);
-                    first.setPrev(first);
-                } else {
-                    /*
-                      Si no está vacía digo que first va a ser un nuevo nodo que su anterior siempre va a ser last
-                      y su siguiente first, luego es necesario mover el puntero del first antiguo al nuevo first
-                      y actualizar el puntero de siguiente de last al nuevo first
-                     */
+            if (index != size) {
+                if (index == 0) {
                     first = new Nodo<>(e, last, first);
                     first.getNext().setPrev(first);
                     last.setNext(first);
+                } else if (index == size - 1) {
+                    last.getPrev().setNext(new Nodo<>(e, last.getPrev(), last));
+                    last.setPrev(last.getPrev().getNext());
+                } else {
+                    Nodo<E> aux = getNodo(index);
+                    aux.getPrev().setNext(new Nodo<>(e, aux.getPrev(), aux));
+                    aux.setPrev(aux.getPrev().getNext());
                 }
-            } else if (index == size) {
-                /*
-                    En caso de que size sea 0 y se quiera añadir en la posición 0, esto sería válido también,
-                    pero se ejecuta la anterior primeramente. Por tanto, en otro caso cualquiera, si size es 1 y se quiera
-                    añadir en la posición 1 (la segunda para nosotros) se trata de añadir como si fuera un método add normal
-                    solo que para que preguntar si está vacía o no (si hace esto nunca estará vacía), por lo que siempre se iría
-                    por el mismo camino por eso lo hago aquí mismo
-                 */
-                last.setNext(new Nodo<>(e, last, first));
-                last = last.getNext();
-                first.setPrev(last);
-            } else if (index == size - 1) {
-                /*
-                    Si vamos a añadir en la última posición este desplaza al último ocupando así la penúltima posición siempre
-                    por lo que se puede aprovechar el indicador de Prev(anterior) y mediante este le decimos que el siguiente al
-                    penúltimo que había hasta ese momento va a ser un nuevo nodo que va a tener como anterior el anterior al último que
-                    hay en ese momento (que sería el penúltimo) y el siguiente va a ser el último quedando así el nuevo nodo entre el penúltimo
-                    que había hasta ese momento y el último entonces el nuevo nodo que se creó pasa a ser el penúltimo. Luego el indicador de anterior
-                    del último hay que moverlo al nuevo nodo que se creó
-                 */
-                last.getPrev().setNext(new Nodo<>(e, last.getPrev(), last));
-                last.setPrev(last.getPrev().getNext());
+                size++; // Siempre se incrementará, en cualquiera de los casos
             } else {
-                Nodo<E> aux = getNodo(index);
-                aux.getPrev().setNext(new Nodo<>(e, aux.getPrev(), aux));
-                aux.setPrev(aux.getPrev().getNext());
-                /*
-                   Obtenemos el anterior al elemento y le dice que su siguiente va a apuntar a un nuevo nodo que el anterior
-                   va a ser el anterior a cursor y el siguiente va a ser cursor, quedando así el nuevo nodo en el medio del anterior
-                   del cursor y el cursor, más tarde hay que reubicar el puntero de anterior del cursor al nuevo nodo que se creó
-                 */
+                add(e);
             }
-            size++; // Siempre se incrementará, en cualquiera de los casos
         } else {
             throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
         }
@@ -275,12 +238,7 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
     @Override
     public E get(int index) {
         if (index >= 0 && index < size) {
-            if (index == 0) { // Si es la primera posición retornamos la info de first
-                return first.getInfo();
-            } else if (index == size - 1) { // Si es la última posición retornamos la info de last
-                return last.getInfo();
-            }
-            return getNodo(index).getInfo(); // Va a retornar la info del nodo que encuentre, todas las comprobaciones ya se hicieron ...
+            return getNodo(index).getInfo();
         }
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
     }

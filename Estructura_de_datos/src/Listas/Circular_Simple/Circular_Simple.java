@@ -136,40 +136,17 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
     @Override
     public void add(E e, int index) {
         if (index >= 0 && index <= size) {
-            if (index == 0) {
-                /*
-                  Si la lista está vacía hay que tratarlo de otra forma porque si no da error!!!!
-                
-                  Lo que se ve abajo es un operador ternario, su funcionamiento es el de un if, en este si se cumple, en este
-                  caso de que la retorne true isEmpty(), se va a ejecutar que first va a ser igual a last que este a su vez va a ser
-                  nuevo nodo con la información que viene por parámetro o si retorna false, simplemente first va a ser un nuevo nodo
-                  con la información que viene por parámetro y en ambos casos el puntero siguiente de last se debe actualizar a first.
-                  Esto se hace debido a que si la lista está vacía se debe proceder de una forma y si no de otra
-                 */
-                first = isEmpty() ? last = new Nodo<>(e, null) : new Nodo<>(e, first);
-                last.setNext(first);
-            } else if (index == size) {
-                /*
-                    En caso de que size sea 0 y se quiera añadir en la posición 0, esto sería válido también,
-                    pero se ejecuta la anterior primeramente. Por tanto, en otro caso cualquiera, si size es 1 y se quiera
-                    añadir en la posición 1 (la segunda para nosotros) se trata de añadir como si fuera un método add normal
-                    solo que para que preguntar si está vacía o no (si hace esto nunca estará vacía), por lo que siempre se iría
-                    por el mismo camino por eso lo hago aquí mismo
-                 */
-                last.setNext(new Nodo<>(e, first));
-                last = last.getNext();
+            if (index != size) {
+                if (index == 0) {
+                    last.setNext(first = new Nodo<>(e, first));
+                } else {
+                    Nodo<E> aux = getNodo(index - 1);
+                    aux.setNext(new Nodo<>(e, aux.getNext()));
+                }
+                size++; // Siempre se incrementará, en cualquiera de los casos
             } else {
-                Nodo<E> aux = getNodo(index - 1);
-                aux.setNext(new Nodo<>(e, aux.getNext()));
-                /*
-                  Una vez ubicados en el elemento que ocupa la posición anterior en donde queremos agregar un elemento nuevo
-                  decimos que el siguiente de cursor va a ser un nuevo nodo el cual va a tener como información la que viene por parámetro
-                  y el siguiente a este nuevo va a ser el siguiente al nodo, ocupando el nuevo nodo la posición intermedia entre cursor y el siguiente
-                  del cursor y quedando así en la posición deseada
-                 */
-
+                add(e);
             }
-            size++; // Siempre se incrementará, en cualquiera de los casos
         } else {
             throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
         }
@@ -189,11 +166,6 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
             Nodo<E> aux; // Nos va a ayudar a saber cuál fue el elemento eliminado
             if (index == 0) {
                 aux = first;
-                /*
-                   Si se desea eliminar la primera posición es suficiente con decir que first
-                   va a ser el siguiente del first que había hasta ese momento y luego es necesario
-                   mover el indicador de siguiente de last al nuevo first
-                 */
                 first = first.getNext();
                 last.setNext(first);
             } else {
@@ -245,16 +217,6 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
     @Override
     public E get(int index) {
         if (index >= 0 && index < size) {
-            if (index == 0) { // Si es la primera posición retornamos la info de first
-                return first.getInfo();
-            } else if (index == size - 1) { // Si es la última posición retornamos la info de last
-                return last.getInfo();
-            }
-            /*
-              Declaramos un nodo al cual le llamaremos cursor para ir desplazándonos hasta
-              llegar al elemento de la posición a la cual queremos obtener su información,
-              una vez ahí retornamos la información de dicho cursor
-             */
             return getNodo(index).getInfo(); // Una vez ubicados retornamos la info del cursor
         }
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango

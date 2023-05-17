@@ -104,14 +104,7 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
      */
     @Override
     public void add(E e) {
-
         if (!isEmpty()) {
-            /*
-               Si la lista no está vacía, indico que el siguiente de last va a ser
-               un nuevo nodo del cual el anterior va a ser el last actual y el siguiente va a ser null
-               luego muevo el indicador de last al siguiente del last que había hasta ese momento que
-               sería el nuevo nodo que se creó
-             */
             last.setNext(new Nodo<>(e, last, null));
             last = last.getNext();
         } else {
@@ -132,49 +125,22 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
     @Override
     public void add(E e, int index) {
         if (index >= 0 && index <= size) {
-            if (index == 0) {
-                /*
-                   Al añadir en 0 hay que comprobar si la lista está vacía porque si lo está
-                   puede darnos un error por eso hay que tratarlo de dos formas diferentes, porque sino da error!!!!
-                 */
-                if (!isEmpty()) {
+            if (index != size) {
+                if (index == 0) {
                     first = new Nodo<>(e, null, first);
                     first.getNext().setPrev(first);
+                } else if (index == size - 1) {
+                    last.getPrev().setNext(new Nodo<>(e, last.getPrev(), last));
+                    last.setPrev(last.getPrev().getNext());
                 } else {
-                    first = last = new Nodo<>(e, null, null);
+                    Nodo<E> aux = getNodo(index);
+                    aux.getPrev().setNext(new Nodo<>(e, aux.getPrev(), aux));
+                    aux.setPrev(aux.getPrev().getNext());
                 }
-            } else if (index == size) {
-                /*
-                    En caso de que size sea 0 y se quiera añadir en la posición 0, esto sería válido también,
-                    pero se ejecuta la anterior primeramente. Por tanto, en otro caso cualquiera, si size es 1 y se quiera
-                    añadir en la posición 1 (la segunda para nosotros) se trata de añadir como si fuera un método add normal
-                    solo que para que preguntar si está vacía o no (si hace esto nunca estará vacía), por lo que siempre se iría
-                    por el mismo camino por eso lo hago aquí mismo
-                */
-                last.setNext(new Nodo<>(e, last, null));
-                last = last.getNext();
-            } else if (index == size - 1) {
-                /*
-                   Si vamos a añadir en la última posición este desplaza al último ocupando así la penúltima posición siempre
-                   por lo que se puede aprovechar el indicador de Prev(anterior) y decir que el anterior al último va a apuntar a un
-                   nuevo nodo el cual el anterior va a ser el penúltimo actual y el siguiente a este nuevo sería el último que había hasta
-                   ese momento, quedando el nuevo nodo entre los dos ocupando la penúltima posición como debe ser, luego hay que actualizar el
-                   puntero de last para que apunte al nuevo nodo
-                 */
-
-                last.getPrev().setNext(new Nodo<>(e, last.getPrev(), last));
-                last.setPrev(last.getPrev().getNext());
+                size++; // Siempre se incrementará en cualquiera de los casos
             } else {
-                Nodo<E> aux = getNodo(index);
-                aux.getPrev().setNext(new Nodo<>(e, aux.getPrev(), aux));
-                aux.setPrev(aux.getPrev().getNext());
-                /*
-                   Obtenemos el anterior al elemento y le decimos que su siguiente va a apuntar a un nuevo nodo que el anterior
-                   va a ser el anterior a cursor y el siguiente va a ser cursor, quedando así el nuevo nodo en el medio del anterior
-                   del cursor y el cursor, más tarde hay que reubicar el puntero de anterior del cursor al nuevo nodo que se creó
-                 */
+                add(e);
             }
-            size++; // Siempre se incrementará en cualquiera de los casos
         } else {
             throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
         }
@@ -248,11 +214,6 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
     @Override
     public E get(int index) {
         if (index >= 0 && index < size) {
-            if (index == 0) { // Si es la primera posición retornamos la info de first
-                return first.getInfo();
-            } else if (index == size - 1) { // Si es la última posición retornamos la info de last
-                return last.getInfo();
-            }
             return getNodo(index).getInfo(); // Va a retornar la info del nodo que encuentre, todas las comprobaciones ya se hicieron ...
         }
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango

@@ -6,53 +6,53 @@ import java.util.function.Consumer;
 
 /**
  * <table>
- *     <tr>
- *         <td>Métodos</td>
- *         <td>Returns</td>
- *         <td>Throws</td>
- *     </tr>
+ * <tr>
+ * <td>Métodos</td>
+ * <td>Returns</td>
+ * <td>Throws</td>
+ * </tr>
  *
- *     <tr>
- *         <td>{@link #add(Object) add(E e)}</td>
- *         <td>void</td>
- *     </tr>
+ * <tr>
+ * <td>{@link #add(Object) add(E e)}</td>
+ * <td>void</td>
+ * </tr>
  *
- *     <tr>
- *         <td>{@link #add(Object, int) add(E e,int index)}</td>
- *         <td>void</td>
- *         <td>{@linkplain IndexOutOfBoundsException}</td>
- *     </tr>
+ * <tr>
+ * <td>{@link #add(Object, int) add(E e,int index)}</td>
+ * <td>void</td>
+ * <td>{@linkplain IndexOutOfBoundsException}</td>
+ * </tr>
  *
- *     <tr>
- *         <td>{@link #remove(int) remove(int index)}</td>
- *         <td>E</td>
- *         <td>{@linkplain IndexOutOfBoundsException}</td>
- *     </tr>
+ * <tr>
+ * <td>{@link #remove(int) remove(int index)}</td>
+ * <td>E</td>
+ * <td>{@linkplain IndexOutOfBoundsException}</td>
+ * </tr>
  *
- *       <tr>
- *           <td>{@link #remove(Object) remove(E elemento)}</td>
- *           <td>boolean</td>
- *       </tr>
+ * <tr>
+ * <td>{@link #remove(Object) remove(E elemento)}</td>
+ * <td>boolean</td>
+ * </tr>
  *
- *       <tr>
- *           <td>{@link #get(int) get(int index)}</td>
- *           <td>E</td>
- *           <td>{@linkplain IndexOutOfBoundsException}</td>
- *       </tr>
+ * <tr>
+ * <td>{@link #get(int) get(int index)}</td>
+ * <td>E</td>
+ * <td>{@linkplain IndexOutOfBoundsException}</td>
+ * </tr>
  *
- *       <tr>
- *           <td>{@link #isEmpty()}</td>
- *           <td>boolean</td>
- *       </tr>
- *       <tr>
- *         <td>{@link #size()}</td>
- *         <td>int</td>
- *       </tr>
+ * <tr>
+ * <td>{@link #isEmpty()}</td>
+ * <td>boolean</td>
+ * </tr>
+ * <tr>
+ * <td>{@link #size()}</td>
+ * <td>int</td>
+ * </tr>
  *
- *     <tr>
- *         <td>{@link #clear()}</td>
- *         <td>void</td>
- *     </tr>
+ * <tr>
+ * <td>{@link #clear()}</td>
+ * <td>void</td>
+ * </tr>
  *
  *
  * </table>
@@ -79,8 +79,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     private int size;
 
     /**
-     * Crea una nueva lista con first y last inicializados en null, porque estaría vacía
-     * y size (cantidad de elementos) en 0
+     * Crea una nueva lista con first y last inicializados en null, porque estaría vacía y size (cantidad de elementos) en 0
      */
     public Simple_Enlazada() {
         first = last = null;
@@ -106,12 +105,6 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     @Override
     public void add(E e) {
         if (!isEmpty()) {
-            /*
-                 Si no está vacía significa que tiene al menos uno, por lo tanto,
-                 apoyándome en el indicador de last le indico que va a tener un nuevo
-                 nodo siguiente que va a tener como información ¨e¨ que viene como parámetro
-                 y el siguiente va a ser null y luego muevo el indicador de last
-             */
             last.setNext(new Nodo<>(e, null));
             last = last.getNext();
         } else {
@@ -131,37 +124,17 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     @Override
     public void add(E e, int index) {
         if (index >= 0 && index <= size) {
-            if (index == 0) {
-                /*
-                  Si la lista esta vacía tengo que hacer como si fuera un método add normal, si no lo está digo
-                  que first va a ser un nuevo nodo que va a tener como siguiente el indicador de first que había hasta
-                  ese momento, hay que hacerlo así porque sino da error!!!!
-                 */
-                first = isEmpty() ? last = new Nodo<>(e, null) : new Nodo<>(e, first); // Operador ternario
-            } else if (index == size) {
-                /*
-                   Si index == size significa que estaríamos haciendo como si fuera un método
-                   añadir normal, entonces apoyándome en el indicador de last, digo que va a tener como
-                   siguiente un nuevo nodo con la información que viene por parámetro y el siguiente va a ser null
-                   luego muevo el puntero de last (esto es como el método add, pero no lo llamo porque sería preguntar si
-                   está vacía para siempre irse por el mismo camino)
-                 */
-                last.setNext(new Nodo<>(e, null));
-                last = last.getNext();
+            if (index != size) {
+                if (index != 0) {
+                    Nodo<E> aux = getNodo(index - 1);
+                    aux.setNext(new Nodo<>(e, aux.getNext()));
+                } else {
+                    first = new Nodo<>(e, first);
+                }
+                size++; // Siempre se incrementará, en cualquiera de los casos
             } else {
-                /*
-                  Declaramos un nodo que le llamaremos cursor para ir desplazándonos
-                  hasta la posición anterior en la cual queremos agregar un nuevo nodo,
-                  una vez ahí, decimos que al nodo sobre el cual está posicionado nuestro
-                  cursor va a tener un nuevo siguiente con la información que viene como parámetro y que este
-                  nuevo nodo va a tener como siguiente el siguiente a cursor, que constituiría la posición en la
-                  que queremos añadir un nuevo nodo, de esta forma se desplazan las posiciones y queda que el nuevo
-                  nodo ocupa la decisión deseada porque desplaza al siguiente
-                 */
-                Nodo<E> aux = getNodo(index - 1);
-                aux.setNext(new Nodo<>(e, aux.getNext()));
+                add(e);
             }
-            size++; // Siempre se incrementará, en cualquiera de los casos
         } else {
             throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
         }
@@ -182,16 +155,6 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
             if (index != 0) {
                 Nodo<E> cursor = getNodo(index - 1);
                 aux = cursor.getNext();
-                /*
-                  Nos desplazamos hasta el elemento que ocupa la posición anterior a la que queremos
-                  eliminar y una vez ahí indicamos el siguiente nodo del nodo sobre el cual estamos
-                  posicionados será el siguiente del siguiente, quedando fuera el nodo intermedio entre
-                  el nodo cursor y el siguiente de siguiente
-
-                  Si ya tenemos que aux es el siguiente del cursor para no tener que poner cursor.getNext().getNext()
-                  podemos apoyarnos en aux, para hacer uso del método getNext() una sola vez y ya, entonces le pasamos en la
-                  siguiente línea aux.getNext() // Y nos ahorramos trabajo
-                 */
                 cursor.setNext(aux.getNext());
 
                 if (index == size - 1) // Necesario porque si estamos eliminando la última posición hay que mover el puntero de last
@@ -208,8 +171,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     }
 
     /**
-     * Retira de la lista la primera la ocurrencia del objeto
-     * especificado. Si no se encuentra se mantendrá sin cambios.
+     * Retira de la lista la primera la ocurrencia del objeto especificado. Si no se encuentra se mantendrá sin cambios.
      *
      * @param elemento elemento a ser removido de la lista
      * @return true si fue removido, en caso contrario false
@@ -239,14 +201,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
      */
     @Override
     public E get(int index) {
-
         if (index >= 0 && index < size) {
-
-            if (index == 0) { // Si es la primera posición retornamos la info de first
-                return first.getInfo();
-            } else if (index == size - 1) { // Si es la última posición retornamos la info de last
-                return last.getInfo();
-            }
             return getNodo(index).getInfo(); // Una vez ubicados retornamos la info del cursor
         }
         throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
@@ -281,7 +236,6 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     public int size() {
         return size;
     }
-
 
     /**
      * Eliminará todos los elementos de la lista
@@ -323,9 +277,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         }
     }
 
-
     // Métodos de ordenamiento
-
     public void bubble_sort(Simple_Enlazada<Integer> Lista) { // Funciona, está listo
         Nodo<Integer> cursor = Lista.getFirst(), cursor2;
         Integer aux; // Nos ayudará a intercambiar los elementos
@@ -512,6 +464,29 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
     }
 
+    public void bucket_sort(Simple_Enlazada<Integer> Lista) { // Todavía no está listo
+        int menor = Lista.get(0), mayor = Lista.get(0);
+
+        for (Integer valor : Lista) {
+            if (valor > mayor) {
+                mayor = valor;
+            }
+        }
+
+        int cant_casilleros = mayor / 10;
+
+        Simple_Enlazada<Simple_Enlazada<Integer>> casilleros = new Simple_Enlazada<>();
+
+        for (int i = 0; i < cant_casilleros; i++) {
+            casilleros.add(new Simple_Enlazada<>());
+        }
+
+        for (int i = 0; i < cant_casilleros; i++) {
+
+        }
+
+    }
+
     public static void mergeSort(LinkedList<Integer> list, int izq, int der) {
         if (izq >= der) {
             return;
@@ -542,29 +517,6 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         }
     }
 
-    // Métodos de ordenación que aún no están listos
-    public void bucket_sort(Simple_Enlazada<Integer> Lista) { // Todavía no está listo
-        int menor = Lista.get(0), mayor = Lista.get(0);
-
-        for (Integer valor : Lista) {
-            if (valor > mayor) {
-                mayor = valor;
-            }
-        }
-
-        int cant_casilleros = mayor / 10;
-
-        Simple_Enlazada<Simple_Enlazada<Integer>> casilleros = new Simple_Enlazada<>();
-
-        for (int i = 0; i < cant_casilleros; i++) {
-            casilleros.add(new Simple_Enlazada<>());
-        }
-
-        for (int i = 0; i < cant_casilleros; i++) {
-
-        }
-
-    }
 
     // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override

@@ -19,7 +19,9 @@ public class Test {
         Lista.add(12);
         Lista.add(65);
         Lista.add(8);
-        Lista.add(10, 2);
+        Lista.mostrar_estructura();
+        System.out.println();
+        Lista.add(10, 0);
         Lista.mostrar_estructura();
 
         Lista.forEach(System.out::println);
