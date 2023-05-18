@@ -5,6 +5,8 @@ import Listas.Circular_Simple.Circular_Simple;
 import Listas.Doble_Enlazada.Doble_Enlazada;
 import Listas.Persona;
 
+import java.util.LinkedList;
+
 
 /**
  * @author Yordanis Tejeda Rodríguez
@@ -14,15 +16,14 @@ public class Test {
     public static void main(String[] args) {
 
         Simple_Enlazada<Integer> Lista = new Simple_Enlazada<>();
-
+        LinkedList<Integer> L = new LinkedList<>();
+        L.stream().parallel();
         Lista.add(20);
         Lista.add(12);
         Lista.add(65);
         Lista.add(8);
         Lista.mostrar_estructura();
         System.out.println();
-        Lista.add(10, 0);
-        Lista.mostrar_estructura();
 
         Lista.forEach(System.out::println);
         /*

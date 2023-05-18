@@ -202,6 +202,14 @@ public class Doble_Enlazada<E> implements List<E>, Iterable<E> {
         return false;
     }
 
+    public void set(int index, E elemento) {
+        if (index >= 0 && index < size) {
+            getNodo(index).setInfo(elemento);
+        } else {
+            throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+        }
+    }
+
     /**
      * Obtiene el dato de la posición que se le pase como parámetro
      *

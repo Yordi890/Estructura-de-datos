@@ -2,11 +2,21 @@ package Listas.Circular_Doble;
 
 import Listas.Persona;
 
+import java.util.LinkedList;
+
 public class Test {
 
     public static void main(String[] args) {
 
         Circular_Doble<Persona> Lista = new Circular_Doble<>();
+        LinkedList<Integer> L = new LinkedList<>();
+        L.add(3);
+        L.add(1);
+        L.add(32);
+        L.add(334);
+        L.set(1, 5);
+
+        L.forEach(System.out::println);
 
         // Casos de prueba para el método add normal
         Lista.add(new Persona("0000", "Yordanis", "Tejeda", 20));
