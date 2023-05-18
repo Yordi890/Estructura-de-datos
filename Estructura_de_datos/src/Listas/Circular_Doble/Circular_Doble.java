@@ -176,26 +176,20 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
     public E remove(int index) {
         if (index >= 0 && index < size) {
             Nodo<E> aux; // Nos va a ayudar a saber cuál fue el elemento eliminado
-            if (index == 0) {
-                aux = first;
-                first = first.getNext();
-                first.setPrev(last);
-                last.setNext(first);
-            } else if (index == size - 1) {
-                aux = last;
-                last = last.getPrev();
+            if (index == 0 || index == size - 1) {
+                if (index == 0) {
+                    aux = first;
+                    first = first.getNext();
+                } else {
+                    aux = last;
+                    last = last.getPrev();
+                }
                 first.setPrev(last);
                 last.setNext(first);
             } else {
                 aux = getNodo(index);
                 aux.getPrev().setNext(aux.getNext());
                 aux.getNext().setPrev(aux.getPrev());
-                /*
-                   Nos desplazamos hasta el elemento que ocupa la posición que queremos eliminar y
-                   con ayuda del método getPrev() (obtenemos el anterior) para decir que su siguiente va a
-                   ser el siguiente a cursor y conjunto a esto le decimos que el anterior al siguiente del cursor
-                   va a apuntar al anterior del cursor quedando el elemento que queremos eliminar sin acceso
-                 */
             }
             size--; // Siempre se decrementará, en cualquiera de los casos
             return aux.getInfo(); // Para saber cuál fue el objeto que fue eliminado
