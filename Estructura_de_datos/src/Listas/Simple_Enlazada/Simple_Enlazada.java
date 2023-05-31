@@ -142,17 +142,18 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     public void add(E e, int index) {
         checkElementIndex(index);
 
-        if (index == size) {
-            add(e);
-            return;
-        } else if (index == 0) {
-            first = new Nodo<>(e, first);
+        if (index != size) {
+            if (index == 0) {
+                first = new Nodo<>(e, first);
+            } else {
+                Nodo<E> aux = getNodo(index - 1);
+                aux.setNext(new Nodo<>(e, aux.getNext()));
+            }
+            size++; // Siempre se incrementará, en cualquiera de los casos
         } else {
-            Nodo<E> aux = getNodo(index - 1);
-            aux.setNext(new Nodo<>(e, aux.getNext()));
+            add(e);
         }
 
-        size++; // Siempre se incrementará, en cualquiera de los casos
     }
 
     /**

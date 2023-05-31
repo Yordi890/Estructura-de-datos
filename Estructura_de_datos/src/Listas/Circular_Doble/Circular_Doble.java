@@ -142,18 +142,20 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
     public void add(E e, int index) {
         checkElementIndex(index);
         if (index == size) {
-            add(e);
-            return;
-        } else if (index == 0) {
-            first = new Nodo<>(e, last, first);
-            first.getNext().setPrev(first);
-            last.setNext(first);
+            if (index == 0) {
+                first = new Nodo<>(e, last, first);
+                first.getNext().setPrev(first);
+                last.setNext(first);
+            } else {
+                Nodo<E> aux = getNodo(index);
+                aux.getPrev().setNext(new Nodo<>(e, aux.getPrev(), aux));
+                aux.setPrev(aux.getPrev().getNext());
+            }
+            size++; // Siempre se incrementará, en cualquiera de los casos
         } else {
-            Nodo<E> aux = getNodo(index);
-            aux.getPrev().setNext(new Nodo<>(e, aux.getPrev(), aux));
-            aux.setPrev(aux.getPrev().getNext());
+            add(e);
         }
-        size++; // Siempre se incrementará, en cualquiera de los casos
+
     }
 
     /**
