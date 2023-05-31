@@ -1,8 +1,9 @@
 package Listas.Simple_Enlazada;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.function.Consumer;
 
 /**
  * <table>
@@ -30,7 +31,7 @@ import java.util.stream.*;
  * </tr>
  *
  * <tr>
- * <td>{@link #remove(Object) remove(E elemento)}</td>
+ * <td>{@link #remove_Obj(Object) remove(E elemento)}</td>
  * <td>boolean</td>
  * </tr>
  *
@@ -61,7 +62,7 @@ import java.util.stream.*;
  * @author Yordanis Tejeda Rodriguez
  * @version 4.0
  */
-public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
+public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
 
     /**
      * Indicador del primer nodo
@@ -96,6 +97,22 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
         return first;
     }
 
+    public void setFirst(Nodo<E> first) {
+        this.first = first;
+    }
+
+    public Nodo<E> getLast() {
+        return last;
+    }
+
+    public void setLast(Nodo<E> last) {
+        this.last = last;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
     /**
      * Añadirá a la lista el elemento que se le pase como parámetro
      *
@@ -123,21 +140,19 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
      */
     @Override
     public void add(E e, int index) {
-        if (index >= 0 && index <= size) {
-            if (index != size) {
-                if (index != 0) {
-                    Nodo<E> aux = getNodo(index - 1);
-                    aux.setNext(new Nodo<>(e, aux.getNext()));
-                } else {
-                    first = new Nodo<>(e, first);
-                }
-                size++; // Siempre se incrementará, en cualquiera de los casos
-            } else {
-                add(e);
-            }
+        checkElementIndex(index);
+
+        if (index == size) {
+            add(e);
+            return;
+        } else if (index == 0) {
+            first = new Nodo<>(e, first);
         } else {
-            throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+            Nodo<E> aux = getNodo(index - 1);
+            aux.setNext(new Nodo<>(e, aux.getNext()));
         }
+
+        size++; // Siempre se incrementará, en cualquiera de los casos
     }
 
     /**
@@ -150,24 +165,24 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
      */
     @Override
     public E remove(int index) {
-        if (index >= 0 && index < size) { // Para verificar que index esté en el rango posible
-            Nodo<E> aux; // Nos va a ayudar a saber cuál fue el elemento eliminado
-            if (index != 0) {
-                Nodo<E> cursor = getNodo(index - 1);
-                aux = cursor.getNext();
-                cursor.setNext(aux.getNext());
+        checkElementIndex(index + 1);
 
-                if (index == size - 1) // Necesario porque si estamos eliminando la última posición hay que mover el puntero de last
-                    last = cursor;
-            } else {
-                aux = first; // Para luego saber cuál fue el elemento eliminado
-                first = first.getNext(); // Si es la primera posición, basta con mover el indicador de first al siguiente
-            }
-
-            size--; // Siempre se decrementará, en cualquiera de los dos casos
-            return aux.getInfo(); // Para saber cuál fue el elemento eliminado
+        Nodo<E> aux; // Nos va a ayudar a saber cuál fue el elemento eliminado
+        if (index == 0) {
+            aux = first; // Para luego saber cuál fue el elemento eliminado
+            first = first.getNext(); // Si es la primera posición, basta con mover el indicador de first al siguiente
+        } else if (index == size - 1) {
+            aux = last;
+            last = getNodo(size - 2);
+            last.setNext(null);
+        } else {
+            Nodo<E> cursor = getNodo(index - 1);
+            aux = cursor.getNext();
+            cursor.setNext(aux.getNext());
         }
-        throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+
+        size--; // Siempre se decrementará, en cualquiera de los dos casos
+        return aux.getInfo(); // Para saber cuál fue el elemento eliminado
     }
 
     /**
@@ -178,7 +193,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
      * @see #remove(int) remove(int index)
      * @since 4.0
      */
-    public boolean remove(E elemento) {
+    public boolean remove_Obj(E elemento) {
         Nodo<E> cursor = first;
 
         for (int i = 0; i < size; i++) {
@@ -192,11 +207,13 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
     }
 
     public void set(int index, E elemento) {
-        if (index >= 0 && index < size) {
-            getNodo(index).setInfo(elemento);
-        } else {
+        checkElementIndex(index);
+        getNodo(index).setInfo(elemento);
+    }
+
+    private void checkElementIndex(int index) {
+        if (index < 0 || index > size)
             throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
-        }
     }
 
     /**
@@ -209,10 +226,8 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
      */
     @Override
     public E get(int index) {
-        if (index >= 0 && index < size) {
-            return getNodo(index).getInfo(); // Una vez ubicados retornamos la info del cursor
-        }
-        throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+        checkElementIndex(index);
+        return getNodo(index).getInfo(); // Una vez ubicados retornamos la info del cursor
     }
 
     private Nodo<E> getNodo(int index) {
@@ -473,15 +488,18 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
     }
 
     public void bucket_sort(Simple_Enlazada<Integer> Lista) { // Todavía no está listo
-        int menor = Lista.get(0), mayor = Lista.get(0);
+        int menor = Lista.get(0), mayor = Lista.get(0), size = Lista.size();
 
         for (Integer valor : Lista) {
             if (valor > mayor) {
                 mayor = valor;
             }
+            if (valor < menor) {
+                menor = valor;
+            }
         }
-
-        int cant_casilleros = mayor / 10;
+        int C = (mayor - menor) / 10;
+        int cant_casilleros = mayor / C;
 
         Simple_Enlazada<Simple_Enlazada<Integer>> casilleros = new Simple_Enlazada<>();
 
@@ -489,9 +507,37 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
             casilleros.add(new Simple_Enlazada<>());
         }
 
+        Lista.remove_Obj(menor);
+        casilleros.get(0).add(menor);
         for (int i = 0; i < cant_casilleros; i++) {
-
+            for (int j = 0; j < Lista.size(); j++) {
+                if (Lista.get(j) > menor && Lista.get(j) < menor + C) {
+                    casilleros.get(i).add(Lista.remove(j));
+                }
+            }
+            menor += C;
         }
+        for (Simple_Enlazada<Integer> L : casilleros) {
+            if (!L.isEmpty()) {
+                insertion_sort(L);
+                if (Lista.isEmpty()) {
+                    Lista.setFirst(L.getFirst());
+                } else {
+                    Lista.getLast().setNext(L.getFirst());
+                }
+                Lista.setLast(L.getLast());
+            }
+        }
+
+        Lista.setSize(size);
+        /*for (int i = 0; i < cant_casilleros; i++) {
+            if (!casilleros.get(i).isEmpty()) {
+                for (int j = 0; j < casilleros.get(i).size(); j++) {
+                    System.out.println(casilleros.get(i).get(j));
+                }
+            }
+        }
+        System.out.println("Hola");*/
 
     }
 
@@ -508,7 +554,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
     private static void merge(LinkedList<Integer> list, int low, int middle, int high) {
         int IstList_end = middle, IIndList_start = middle + 1, l = low;
 
-        // Aqui empece a hacer los cambios
+        // Aquí empece a hacer los cambios
         while ((l <= IstList_end) && (IIndList_start <= high)) {
             if (list.get(low) < list.get(IIndList_start)) {
                 low++;
@@ -517,7 +563,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
                 for (int j = IIndList_start - 1; j >= low; j--) {
                     list.set(list.get(j), j + 1);
                 }
-                list.set(temp, low);
+                list.set(temp, low); // Verificar esto cuando lo haga para mis propias estructuras
                 low++;
                 IstList_end++;
                 IIndList_start++;
@@ -525,6 +571,35 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
         }
     }
 
+    public void slow_sort() {
+        /*     List<Integer> L = new ArrayList<>();
+        L.add(45);
+        L.add(3);
+        L.add(1);
+        L.add(23);
+
+
+        //     while (!isListSorted(L)) {
+        ///     Collections.shuffle(L);
+        //   }
+
+         */
+    }
+
+    private static boolean isListSorted(List<Integer> numberList) {
+        if (numberList == null) return true;
+
+        int length = numberList.size();
+        if (length <= 1) return true;
+
+        for (int i = 0; i < length - 1; i++) {
+            if (numberList.get(i) > numberList.get(i + 1)) {
+                return false;
+            }
+
+        }
+        return true;
+    }
 
     // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override
@@ -533,197 +608,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E>, Stream<E> {
     }
 
     @Override
-    public Stream<E> filter(Predicate<? super E> predicate) {
-        return null;
-    }
-
-    @Override
-    public <R> Stream<R> map(Function<? super E, ? extends R> mapper) {
-        return null;
-    }
-
-    @Override
-    public IntStream mapToInt(ToIntFunction<? super E> mapper) {
-        return null;
-    }
-
-    @Override
-    public LongStream mapToLong(ToLongFunction<? super E> mapper) {
-        return null;
-    }
-
-    @Override
-    public DoubleStream mapToDouble(ToDoubleFunction<? super E> mapper) {
-        return null;
-    }
-
-    @Override
-    public <R> Stream<R> flatMap(Function<? super E, ? extends Stream<? extends R>> mapper) {
-        return null;
-    }
-
-    @Override
-    public IntStream flatMapToInt(Function<? super E, ? extends IntStream> mapper) {
-        return null;
-    }
-
-    @Override
-    public LongStream flatMapToLong(Function<? super E, ? extends LongStream> mapper) {
-        return null;
-    }
-
-    @Override
-    public DoubleStream flatMapToDouble(Function<? super E, ? extends DoubleStream> mapper) {
-        return null;
-    }
-
-    @Override
-    public Stream<E> distinct() {
-        return null;
-    }
-
-    @Override
-    public Stream<E> sorted() {
-        return null;
-    }
-
-    @Override
-    public Stream<E> sorted(Comparator<? super E> comparator) {
-        return null;
-    }
-
-    @Override
-    public Stream<E> peek(Consumer<? super E> action) {
-        return null;
-    }
-
-    @Override
-    public Stream<E> limit(long maxSize) {
-        return null;
-    }
-
-    @Override
-    public Stream<E> skip(long n) {
-        return null;
-    }
-
-    @Override
     public void forEach(Consumer<? super E> action) {
         Iterable.super.forEach(action);
-    }
-
-    @Override
-    public void forEachOrdered(Consumer<? super E> action) {
-
-    }
-
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
-    @Override
-    public <A> A[] toArray(IntFunction<A[]> generator) {
-        return null;
-    }
-
-    @Override
-    public E reduce(E identity, BinaryOperator<E> accumulator) {
-        return null;
-    }
-
-    @Override
-    public Optional<E> reduce(BinaryOperator<E> accumulator) {
-        return Optional.empty();
-    }
-
-    @Override
-    public <U> U reduce(U identity, BiFunction<U, ? super E, U> accumulator, BinaryOperator<U> combiner) {
-        return null;
-    }
-
-    @Override
-    public <R> R collect(Supplier<R> supplier, BiConsumer<R, ? super E> accumulator, BiConsumer<R, R> combiner) {
-        return null;
-    }
-
-    @Override
-    public <R, A> R collect(Collector<? super E, A, R> collector) {
-        return null;
-    }
-
-    @Override
-    public Optional<E> min(Comparator<? super E> comparator) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<E> max(Comparator<? super E> comparator) {
-        return Optional.empty();
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public boolean anyMatch(Predicate<? super E> predicate) {
-        return false;
-    }
-
-    @Override
-    public boolean allMatch(Predicate<? super E> predicate) {
-        return false;
-    }
-
-    @Override
-    public boolean noneMatch(Predicate<? super E> predicate) {
-        return false;
-    }
-
-    @Override
-    public Optional<E> findFirst() {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<E> findAny() {
-        return Optional.empty();
-    }
-
-    @Override
-    public Spliterator<E> spliterator() {
-        return Iterable.super.spliterator();
-    }
-
-    @Override
-    public boolean isParallel() {
-        return false;
-    }
-
-    @Override
-    public Stream<E> sequential() {
-        return null;
-    }
-
-    @Override
-    public Stream<E> parallel() {
-        return null;
-    }
-
-    @Override
-    public Stream<E> unordered() {
-        return null;
-    }
-
-    @Override
-    public Stream<E> onClose(Runnable closeHandler) {
-        return null;
-    }
-
-    @Override
-    public void close() {
-
     }
 }

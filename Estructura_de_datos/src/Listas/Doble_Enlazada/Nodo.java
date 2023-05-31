@@ -54,25 +54,4 @@ public class Nodo<E> {
         Next = next;
     }
 
-    @Override
-    public String toString() {
-        String L = "";
-
-        try {
-            L += "Prev: " + Prev.Info + " <-- ";
-        } catch (Exception e) {
-            L += "Prev: no hay nada <-- ";
-        }
-
-        L += "Info: " + Info;
-
-        try {
-            L += " --> Next: " + Next.Info;
-        } catch (Exception e) {
-            L += " --> Next: no hay nada";
-        }
-
-
-        return L;
-    }
 }

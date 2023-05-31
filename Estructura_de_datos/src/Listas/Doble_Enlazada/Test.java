@@ -18,8 +18,14 @@ public class Test {
         Lista.add(new Persona("3333", "Miguel", "Baez", 19));
         Lista.add(new Persona("4444", "Juan", "Sanchez", 20));
 
-        Lista.add(new Persona("5555", "Ernesto", "Fernandez", 21), 3);
         Lista.mostrar_estructura();
+
+        System.out.println();
+
+        Lista.remove(2);
+
+        Lista.mostrar_estructura();
+
         /*
         for (Persona P : Lista) {
             System.out.println(P);

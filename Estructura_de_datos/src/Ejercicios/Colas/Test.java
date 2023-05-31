@@ -38,17 +38,20 @@ public class Test {
     }
 
     public static int suma_hasta(Cola_enlazada<Integer> Cola, int n) {
-        int valor_actual, suma = 0;
-        for (int i = 0; i <= n; i++) {
-            suma += valor_actual = Cola.poll();
-            Cola.add(valor_actual);
-        }
+        if (n >= 0 && n < Cola.size()) {
+            int valor_actual, suma = 0;
+            for (int i = 0; i <= n; i++) {
+                suma += valor_actual = Cola.poll();
+                Cola.add(valor_actual);
+            }
 
-        for (int i = 0; i < (Cola.size() - n - 1); i++) {
-            Cola.add(Cola.poll());
-        }
+            for (int i = 0; i < (Cola.size() - n - 1); i++) {
+                Cola.add(Cola.poll());
+            }
 
-        return suma;
+            return suma;
+        }
+        throw new IndexOutOfBoundsException("Index out of the range");
     }
 
     public static void main(String[] args) {
@@ -59,9 +62,9 @@ public class Test {
         Cola.add(2);
         Cola.add(9);
 
-        System.out.println("El mayor es " + encontrar_mayor(Cola));
-        System.out.println("El menor es " + encontrar_menor(Cola));
-        System.out.println("La suma es " + suma_hasta(Cola, 2));
+        /*System.out.println("El mayor es " + encontrar_mayor(Cola));
+        System.out.println("El menor es " + encontrar_menor(Cola));*/
+        System.out.println("La suma es " + suma_hasta(Cola, 4));
 
         Cola.forEach(System.out::println);
     }

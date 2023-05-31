@@ -90,7 +90,7 @@ public class Tree<E> {
         if (root != nodo_a_eliminar) { // Si no es la raíz
             for (Nodo<E> hijo : root.getChildren()) {
                 if (hijo == nodo_a_eliminar) {
-                    root.getChildren().remove(nodo_a_eliminar); // Esto es una lista, así que simplemente uso el remove de las listas
+                    root.getChildren().remove_Obj(nodo_a_eliminar); // Esto es una lista, así que simplemente uso el remove de las listas
                     return;
                 } else {
                     /*

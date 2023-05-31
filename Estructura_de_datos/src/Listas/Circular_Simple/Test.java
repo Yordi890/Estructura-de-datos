@@ -12,8 +12,14 @@ public class Test {
         Lista.add(new Persona("3333", "Miguel", "Baez", 19));
         Lista.add(new Persona("4444", "Juan", "Sanchez", 20));
 
+        Lista.mostrar_estructura();
 
-        for (Persona P : Lista) {
+        System.out.println();
+
+        Lista.remove(4);
+        Lista.mostrar_estructura();
+
+/*        for (Persona P : Lista) {
             System.out.println(P);
         }
 
@@ -48,6 +54,6 @@ public class Test {
         System.out.println("\nEliminando cualquier otra posición");
         Lista.remove(4);
         Lista.mostrar_estructura();
-        System.out.println("\nMostrando indicadores del primero y del último");
+        System.out.println("\nMostrando indicadores del primero y del último");*/
     }
 }

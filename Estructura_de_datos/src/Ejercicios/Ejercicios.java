@@ -5,6 +5,7 @@
  * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
+package Ejercicios;
 
 import Listas.Simple_Enlazada.Simple_Enlazada;
 import Pilas.Pila_Enlazada;
@@ -12,9 +13,7 @@ import Pilas.Pila_Enlazada;
 public class Ejercicios {
 
     /**
-     * El objetivo del método es dado una cantidad de dinero devolver cuantos billetes
-     * de cada tipo hizo falta para pagarle siempre y cuando esta cantidad sea menor o igual
-     * a 42, en caso de que sea mayor retorna un mensaje informando que no se puede pagar la cifra
+     * El objetivo del método es dado una cantidad de dinero devolver cuantos billetes de cada tipo hizo falta para pagarle siempre y cuando esta cantidad sea menor o igual a 42, en caso de que sea mayor retorna un mensaje informando que no se puede pagar la cifra
      *
      * @param cant_a_sacar la cantidad de dinero que se quiere sacar
      * @return mensaje que indica la cantidad de billetes necesarios o respuesta de que no se pudo pagar
@@ -40,13 +39,6 @@ public class Ejercicios {
             int cant_billetes_cinco = 0, cant_billetes_tres = 0, cant_billetes_uno = 0; // Acumuladores de los tipos de billetes
 
             while (cant_a_sacar >= 5 && !cinco.isEmpty()) {
-                /*
-                  Mientras la cantidad a sacar todavía sea mayor a 5 y que todavía tenga billetes
-                  de 5 en mi pila, le voy "pagando" y voy sacando los billetes de 5 que tengo en la
-                  pila de billetes de 5 ...
-
-                  *** Este mismo procedimiento se hace con los billetes de 3 y de 1
-                 */
                 cant_a_sacar -= cinco.pop();
                 cant_billetes_cinco++; // Lo voy aumentando en cada iteración
             }
@@ -56,12 +48,11 @@ public class Ejercicios {
                 cant_billetes_tres++; // Lo voy aumentando en cada iteración
             }
 
-            while (cant_a_sacar >= 1 && !un_peso.isEmpty()) {
-                cant_a_sacar -= un_peso.pop();
-                cant_billetes_uno++; // Lo voy aumentando en cada iteración
+            for (int i = 0; i < cant_a_sacar; i++) {
+                un_peso.pop();
             }
-            // Al final retorno un mensaje con lo que acumuló los contadores
-            return "Hizo falta " + cant_billetes_cinco + " billete(s) de 5, " + cant_billetes_tres + " billete(s) de 3 y " + cant_billetes_uno + " billete(s) de a peso";
+            // Al final retorno un mensaje con lo que acumularon los contadores
+            return "Billete(s) de 5: " + cant_billetes_cinco + "\nBillete(s) de 3: " + cant_billetes_tres + "\nBillete(s) 1: " + cant_a_sacar;
         } else {
             return "No hay para esa cantidad"; // Si se pasa de 42, simplemente no se le da nada porque no alcanzaría
         }
@@ -73,7 +64,7 @@ public class Ejercicios {
      * @param palabra o frase que se desea comprobar si es un palíndromo
      * @return boolean true si es palíndromo, false en caso contrario
      */
-    public static boolean isPalindrome(String palabra) {
+    public static boolean isPalindrome(String palabra) { // Revisar
         /*
          * Solo no interesan las letras no los espacios
          */
@@ -83,6 +74,7 @@ public class Ejercicios {
         palabra.replace('í', 'i');
         palabra.replace('ó', 'o');
         palabra.replace('ú', 'u');
+        palabra.stripIndent();
 
         for (int i = 0, j = palabra.length() - 1; i < (palabra.length() - 1) / 2; i++, j--) {
             if (!(palabra.substring(i, i + 1).equalsIgnoreCase(palabra.substring(j, j + 1)))) {
@@ -106,8 +98,11 @@ public class Ejercicios {
 
     public static void main(String[] args) {
 
-        System.out.println(sacar_billete(27));
-        System.out.println(isPalindrome("Hola") ? "Es palíndromo" : "No es palíndromo");
+        for (int i = 1; i <= 42; i++) {
+            System.out.println("Para " + i + " hizo falta");
+            System.out.println(sacar_billete(i) + "\n");
+        }
+        /*System.out.println(isPalindrome("Hola") ? "Es palíndromo" : "No es palíndromo");
 
         Simple_Enlazada<Integer> Lista = new Simple_Enlazada<>();
         Lista.add(4);
@@ -119,6 +114,6 @@ public class Ejercicios {
 
         invertir_Lista(Lista);
 
-        Lista.forEach(System.out::println);
+        Lista.forEach(System.out::println);*/
     }
 }

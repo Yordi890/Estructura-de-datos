@@ -9,9 +9,13 @@
 package Ejercicios.PuntoEmbarque;
 
 import Cola.Cola_enlazada;
+import Listas.Simple_Enlazada.Simple_Enlazada;
+
+import java.util.ArrayList;
 
 public class Punto_Embarque_Equipajes {
     private final Cola_enlazada<Equipaje>[] punto_E;
+    int[] Arr = {12, 34, 66, 78};
 
     public Punto_Embarque_Equipajes() {
         this.punto_E = new Cola_enlazada[]{new Cola_enlazada<Equipaje>(), new Cola_enlazada<Equipaje>(), new Cola_enlazada<Equipaje>()};

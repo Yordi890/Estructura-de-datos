@@ -29,7 +29,7 @@ import java.util.function.Consumer;
  *     </tr>
  *
  *       <tr>
- *           <td>{@link #remove(Object) remove(E elemento)}</td>
+ *           <td>{@link #remove_Obj(Object) remove(E elemento)}</td>
  *           <td>boolean</td>
  *       </tr>
  *
@@ -135,21 +135,18 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
      */
     @Override
     public void add(E e, int index) {
-        if (index >= 0 && index <= size) {
-            if (index != size) {
-                if (index == 0) {
-                    last.setNext(first = new Nodo<>(e, first));
-                } else {
-                    Nodo<E> aux = getNodo(index - 1);
-                    aux.setNext(new Nodo<>(e, aux.getNext()));
-                }
-                size++; // Siempre se incrementará, en cualquiera de los casos
-            } else {
-                add(e);
-            }
+        checkElementIndex(index);
+        if (index == size) {
+            add(e);
+            return;
+        } else if (index == 0) {
+            first = new Nodo<>(e, first);
+            last.setNext(first);
         } else {
-            throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+            Nodo<E> aux = getNodo(index - 1);
+            aux.setNext(new Nodo<>(e, aux.getNext()));
         }
+        size++; // Siempre se incrementará, en cualquiera de los casos
     }
 
     /**
@@ -162,24 +159,23 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
      */
     @Override
     public E remove(int index) {
-        if (index >= 0 && index < size) {
-            Nodo<E> aux; // Nos va a ayudar a saber cuál fue el elemento eliminado
-            if (index == 0) {
-                aux = first;
-                first = first.getNext();
-                last.setNext(first);
-            } else {
-                Nodo<E> cursor = getNodo(index - 1);
-                aux = cursor.getNext();
-                cursor.setNext(aux.getNext()); // Nos apoyamos en aux para no tener que hacer un doble uso del método getNext()
-
-                if (index == size - 1) // Necesario porque si estamos eliminando el último hay que mover el indicador de last
-                    last = cursor;
-            }
-            size--; // Siempre se decrementará, en cualquiera de los casos
-            return aux.getInfo(); // Para saber cuál fue el objeto que fue eliminado
+        checkElementIndex(index + 1);
+        Nodo<E> aux; // Nos va a ayudar a saber cuál fue el elemento eliminado
+        if (index == 0) {
+            aux = first;
+            first = first.getNext();
+            last.setNext(first);
+        } else if (index == size - 1) {
+            aux = last;
+            last = getNodo(size - 2);
+            last.setNext(first);
+        } else {
+            Nodo<E> cursor = getNodo(index - 1);
+            aux = cursor.getNext();
+            cursor.setNext(aux.getNext()); // Nos apoyamos en aux para no tener que hacer un doble uso del método getNext()
         }
-        throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+        size--; // Siempre se decrementará, en cualquiera de los casos
+        return aux.getInfo(); // Para saber cuál fue el objeto que fue eliminado
     }
 
     /**
@@ -191,7 +187,7 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
      * @see #remove(int) remove(int index)
      * @since 4.0
      */
-    public boolean remove(E elemento) {
+    public boolean remove_Obj(E elemento) {
 
         Nodo<E> cursor = first;
 
@@ -207,11 +203,8 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
     }
 
     public void set(int index, E elemento) {
-        if (index >= 0 && index < size) {
-            getNodo(index).setInfo(elemento);
-        } else {
-            throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
-        }
+        checkElementIndex(index);
+        getNodo(index).setInfo(elemento);
     }
 
     /**
@@ -224,10 +217,13 @@ public class Circular_Simple<E> implements List<E>, Iterable<E> {
      */
     @Override
     public E get(int index) {
-        if (index >= 0 && index < size) {
-            return getNodo(index).getInfo(); // Una vez ubicados retornamos la info del cursor
-        }
-        throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+        checkElementIndex(index);
+        return getNodo(index).getInfo(); // Una vez ubicados retornamos la info del cursor
+    }
+
+    private void checkElementIndex(int index) {
+        if (index < 0 || index > size)
+            throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
     }
 
     public Nodo<E> getNodo(int index) {

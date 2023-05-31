@@ -29,7 +29,7 @@ import java.util.function.Consumer;
  *     </tr>
  *
  *       <tr>
- *           <td>{@link #remove(Object) remove(E elemento)}</td>
+ *           <td>{@link #remove_Obj(Object) remove(E elemento)}</td>
  *           <td>boolean</td>
  *       </tr>
  *
@@ -140,27 +140,20 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
      */
     @Override
     public void add(E e, int index) {
-        if (index >= 0 && index <= size) {
-            if (index != size) {
-                if (index == 0) {
-                    first = new Nodo<>(e, last, first);
-                    first.getNext().setPrev(first);
-                    last.setNext(first);
-                } else if (index == size - 1) {
-                    last.getPrev().setNext(new Nodo<>(e, last.getPrev(), last));
-                    last.setPrev(last.getPrev().getNext());
-                } else {
-                    Nodo<E> aux = getNodo(index);
-                    aux.getPrev().setNext(new Nodo<>(e, aux.getPrev(), aux));
-                    aux.setPrev(aux.getPrev().getNext());
-                }
-                size++; // Siempre se incrementará, en cualquiera de los casos
-            } else {
-                add(e);
-            }
+        checkElementIndex(index);
+        if (index == size) {
+            add(e);
+            return;
+        } else if (index == 0) {
+            first = new Nodo<>(e, last, first);
+            first.getNext().setPrev(first);
+            last.setNext(first);
         } else {
-            throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+            Nodo<E> aux = getNodo(index);
+            aux.getPrev().setNext(new Nodo<>(e, aux.getPrev(), aux));
+            aux.setPrev(aux.getPrev().getNext());
         }
+        size++; // Siempre se incrementará, en cualquiera de los casos
     }
 
     /**
@@ -174,27 +167,25 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
      */
     @Override
     public E remove(int index) {
-        if (index >= 0 && index < size) {
-            Nodo<E> aux; // Nos va a ayudar a saber cuál fue el elemento eliminado
-            if (index == 0 || index == size - 1) {
-                if (index == 0) {
-                    aux = first;
-                    first = first.getNext();
-                } else {
-                    aux = last;
-                    last = last.getPrev();
-                }
-                first.setPrev(last);
-                last.setNext(first);
+        checkElementIndex(index + 1);
+        Nodo<E> aux; // Nos va a ayudar a saber cuál fue el elemento eliminado
+        if (index == 0 || index == size - 1) {
+            if (index == 0) {
+                aux = first;
+                first = first.getNext();
             } else {
-                aux = getNodo(index);
-                aux.getPrev().setNext(aux.getNext());
-                aux.getNext().setPrev(aux.getPrev());
+                aux = last;
+                last = last.getPrev();
             }
-            size--; // Siempre se decrementará, en cualquiera de los casos
-            return aux.getInfo(); // Para saber cuál fue el objeto que fue eliminado
+            first.setPrev(last);
+            last.setNext(first);
+        } else {
+            aux = getNodo(index);
+            aux.getPrev().setNext(aux.getNext());
+            aux.getNext().setPrev(aux.getPrev());
         }
-        throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+        size--; // Siempre se decrementará, en cualquiera de los casos
+        return aux.getInfo(); // Para saber cuál fue el objeto que fue eliminado
     }
 
     /**
@@ -206,7 +197,7 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
      * @see #remove(int) remove(int index)
      * @since 4.0
      */
-    public boolean remove(E elemento) {
+    public boolean remove_Obj(E elemento) {
         Nodo<E> cursor = first;
 
         for (int i = 0; i < size; i++) {
@@ -221,11 +212,8 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
     }
 
     public void set(int index, E elemento) {
-        if (index >= 0 && index < size) {
-            getNodo(index).setInfo(elemento);
-        } else {
-            throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
-        }
+        checkElementIndex(index);
+        getNodo(index).setInfo(elemento);
     }
 
     /**
@@ -239,10 +227,13 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
      */
     @Override
     public E get(int index) {
-        if (index >= 0 && index < size) {
-            return getNodo(index).getInfo();
-        }
-        throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+        checkElementIndex(index);
+        return getNodo(index).getInfo();
+    }
+
+    private void checkElementIndex(int index) {
+        if (index < 0 || index > size)
+            throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
     }
 
     /**
