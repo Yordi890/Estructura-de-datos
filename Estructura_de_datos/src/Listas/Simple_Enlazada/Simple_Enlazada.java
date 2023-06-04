@@ -153,7 +153,6 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         } else {
             add(e);
         }
-
     }
 
     /**
@@ -229,6 +228,17 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     public E get(int index) {
         checkElementIndex(index);
         return getNodo(index).getInfo(); // Una vez ubicados retornamos la info del cursor
+    }
+
+    public boolean contains(E e) {
+        Nodo<E> cursor = first;
+        while (cursor != null) {
+            if (cursor.getInfo().equals(e)) {
+                return true;
+            }
+            cursor = cursor.getNext();
+        }
+        return false;
     }
 
     private Nodo<E> getNodo(int index) {
