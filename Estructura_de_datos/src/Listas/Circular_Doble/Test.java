@@ -2,8 +2,6 @@ package Listas.Circular_Doble;
 
 import Listas.Persona;
 
-import java.util.LinkedList;
-
 public class Test {
 
     public static void main(String[] args) {
@@ -17,6 +15,10 @@ public class Test {
         Lista.add(new Persona("3333", "Miguel", "Baez", 19));
         Lista.add(new Persona("4444", "Juan", "Sanchez", 20));
 
+
+        for (Persona P : Lista) {
+            System.out.println(P.getNombre());
+        }
         Lista.mostrar_estructura();
 
         System.out.println();

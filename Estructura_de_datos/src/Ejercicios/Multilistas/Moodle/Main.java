@@ -6,14 +6,14 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package Ejercicios.Multilistas;
+package Ejercicios.Multilistas.Moodle;
 
 import java.util.Scanner;
 
 /**
  * @author Yordanis Tejeda Rodríguez
  */
-public class Mulitilistas {
+public class Main {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);

@@ -5,53 +5,53 @@ import java.util.function.Consumer;
 
 /**
  * <table>
- *     <tr>
- *         <td>Métodos</td>
- *         <td>Returns</td>
- *         <td>Throws</td>
- *     </tr>
+ * <tr>
+ * <td>Métodos</td>
+ * <td>Returns</td>
+ * <td>Throws</td>
+ * </tr>
  *
- *     <tr>
- *         <td>{@link #add(Object) add(E e)}</td>
- *         <td>void</td>
- *     </tr>
+ * <tr>
+ * <td>{@link #add(Object) add(E e)}</td>
+ * <td>void</td>
+ * </tr>
  *
- *     <tr>
- *         <td>{@link #add(Object, int) add(E e,int index)}</td>
- *         <td>void</td>
- *         <td>{@linkplain IndexOutOfBoundsException}</td>
- *     </tr>
+ * <tr>
+ * <td>{@link #add(Object, int) add(E e,int index)}</td>
+ * <td>void</td>
+ * <td>{@linkplain IndexOutOfBoundsException}</td>
+ * </tr>
  *
- *     <tr>
- *         <td>{@link #remove(int) remove(int index)}</td>
- *         <td>E</td>
- *         <td>{@linkplain IndexOutOfBoundsException}</td>
- *     </tr>
+ * <tr>
+ * <td>{@link #remove(int) remove(int index)}</td>
+ * <td>E</td>
+ * <td>{@linkplain IndexOutOfBoundsException}</td>
+ * </tr>
  *
- *       <tr>
- *           <td>{@link #remove_Obj(Object) remove(E elemento)}</td>
- *           <td>boolean</td>
- *       </tr>
+ * <tr>
+ * <td>{@link #remove_Obj(Object) remove(E elemento)}</td>
+ * <td>boolean</td>
+ * </tr>
  *
- *       <tr>
- *           <td>{@link #get(int) get(int index)}</td>
- *           <td>E</td>
- *           <td>{@linkplain IndexOutOfBoundsException}</td>
- *       </tr>
+ * <tr>
+ * <td>{@link #get(int) get(int index)}</td>
+ * <td>E</td>
+ * <td>{@linkplain IndexOutOfBoundsException}</td>
+ * </tr>
  *
- *       <tr>
- *           <td>{@link #isEmpty()}</td>
- *           <td>boolean</td>
- *       </tr>
- *       <tr>
- *         <td>{@link #size()}</td>
- *         <td>int</td>
- *       </tr>
+ * <tr>
+ * <td>{@link #isEmpty()}</td>
+ * <td>boolean</td>
+ * </tr>
+ * <tr>
+ * <td>{@link #size()}</td>
+ * <td>int</td>
+ * </tr>
  *
- *     <tr>
- *         <td>{@link #clear()}</td>
- *         <td>void</td>
- *     </tr>
+ * <tr>
+ * <td>{@link #clear()}</td>
+ * <td>void</td>
+ * </tr>
  *
  *
  * </table>
@@ -78,8 +78,8 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
     private int size;
 
     /**
-     * Crea una nueva lista con first y last inicializados en null, porque estaría vacía
-     * y size (cantidad de elementos) en 0
+     * Crea una nueva lista con first y last inicializados en null, porque
+     * estaría vacía y size (cantidad de elementos) en 0
      */
     public Circular_Doble() {
         first = last = null;
@@ -104,24 +104,10 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
      */
     @Override
     public void add(E e) {
-
         if (isEmpty()) {
-            /*
-               Si la lista está vacía el indicador de first y last va a apuntar a donde mismo
-               y el primero al ser el último, el siguiente va a ser el mismo y su anterior igualmente
-               PD: al aplicar los cambios a first también se notan en last, puesto que en realidad no son objetos
-               diferentes, sino indicadores, por lo tanto, al cambiárselos a uno ya basta porque, como dije, en realidad
-               no son objetos diferentes
-             */
             first = last = new Nodo<>(e);
-            first.setNext(last);
+            first.setNext(last); // Al hacer esto se lo estás cambiando a ambos a la misma vez, ya que en realidad son el mismo nodo
         } else {
-            /*
-               Apoyándonos en last decimos que su indicador de siguiente va a ser un nuevo Nodo
-               que va a tener como anterior el last que existe actualmente y que el siguiente siempre va a ser
-               first, luego movemos el indicador de last al siguiente del last que había anteriormente el cual sería
-               el nuevo nodo creado y por último actualizamos el puntero de anterior de first al nuevo indicador de last
-             */
             last.setNext(new Nodo<>(e, last, first));
             last = last.getNext();
         }
@@ -133,15 +119,16 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
      * Añadirá el elemento en la posición que se le pase como parámetro
      *
      * @param index posición
-     * @param e     elemento
-     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index > size)
+     * @param e elemento
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index
+     * > size)
      * @see #getNodo(int index)
      * @since 1.0
      */
     @Override
     public void add(E e, int index) {
         checkElementIndex(index);
-        if (index == size) {
+        if (index != size) {
             if (index == 0) {
                 first = new Nodo<>(e, last, first);
                 first.getNext().setPrev(first);
@@ -153,9 +140,8 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
             }
             size++; // Siempre se incrementará, en cualquiera de los casos
         } else {
-            add(e);
+            add(e); // Tiene su propio incremento de size
         }
-
     }
 
     /**
@@ -163,7 +149,8 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
      *
      * @param index posición
      * @return aux elemento que fue eliminado
-     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index > size)
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index
+     * > size)
      * @see #getNodo(int index)
      * @since 1.0
      */
@@ -171,7 +158,7 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
     public E remove(int index) {
         checkElementIndex(index + 1);
         Nodo<E> aux; // Nos va a ayudar a saber cuál fue el elemento eliminado
-        if (index == 0 || index == size - 1) {
+        if (index == 0 || index == size - 1) { // Lo hice para agrupar lo que hay debajo
             if (index == 0) {
                 aux = first;
                 first = first.getNext();
@@ -191,8 +178,8 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
     }
 
     /**
-     * Retira de la lista la primera la ocurrencia del objeto
-     * especificado. Si no se encuentra se mantendrá sin cambios.
+     * Retira de la lista la primera la ocurrencia del objeto especificado. Si
+     * no se encuentra se mantendrá sin cambios.
      *
      * @param elemento elemento a ser removido de la lista
      * @return true si fue removido, en caso contrario false
@@ -223,7 +210,8 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
      *
      * @param index posición
      * @return E elemento
-     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index > size)
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index
+     * > size)
      * @see #getNodo(int index)
      * @since 1.0.0
      */
@@ -233,9 +221,15 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
         return getNodo(index).getInfo();
     }
 
+    /**
+     * @param index índice que se quiere comprobar si está en el rango correcto
+     * @throws IndexOutOfBoundsException if index < 0 || index > size
+     * @since 3.0
+     */
     private void checkElementIndex(int index) {
-        if (index < 0 || index > size)
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+        }
     }
 
     /**
@@ -254,7 +248,8 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
     }
 
     /**
-     * Devuelve dado una posición el nodo que está en ella, funciona de manera recursiva
+     * Devuelve dado una posición el nodo que está en ella, funciona de manera
+     * recursiva
      *
      * @param index posición del elemento
      * @return nodo que ocupa dicha posición
@@ -320,7 +315,6 @@ public class Circular_Doble<E> implements List<E>, Iterable<E> {
             cursor = cursor.getNext();
         }
     }
-
 
     // Los métodos de a continuación son necesarios para poder usar el for each en estas estructuras
     @Override

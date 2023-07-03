@@ -1,3 +1,4 @@
+
 /**
  * @author Yordanis Tejeda Rodríguez
  */
@@ -8,7 +9,7 @@ public class Recursividad {
     /**
      * Calcula la potencia de un número elevado a otro
      *
-     * @param base     número al que le quieres hallar su potencia
+     * @param base número al que le quieres hallar su potencia
      * @param potencia exponente al que se desea elevar la base
      * @return resultado de elevar la base a la potencia dada
      */
@@ -61,10 +62,10 @@ public class Recursividad {
 
     /**
      * Halla el producto de dos números cualesquiera, de forma recursiva
-     * teniendo en cuenta que esto está dado por la suma del primer
-     * número tantas veces como lo indique el segundo
+     * teniendo en cuenta que esto está dado por la suma del primer número
+     * tantas veces como lo indique el segundo
      *
-     * @param primer  número
+     * @param primer número
      * @param segundo número
      * @return producto entre ambos números
      */
@@ -95,7 +96,6 @@ public class Recursividad {
     public static void main(String[] args) {
         Recursividad R = new Recursividad();
 
-
         System.out.println(R.potencia(2, 7));
         /*
         int Arr[] = {2, 4, 6, 8, 10};
@@ -107,6 +107,6 @@ public class Recursividad {
         System.out.println(R.producto(2, 412));
         System.out.println(R.suma(20));
         System.out.println(R.octal(100));
-        */
+         */
     }
 }

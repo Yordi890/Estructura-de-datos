@@ -5,8 +5,7 @@
  * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
-
-package Ejercicios.Multilistas;
+package Ejercicios.Multilistas.Moodle;
 
 import Listas.Circular_Doble.Circular_Doble;
 
@@ -29,8 +28,9 @@ public class Moodle {
      */
     public boolean addFacultad(String nombre) {
         for (int i = 0; i < Lista.size(); i++) {
-            if (Lista.get(i).getNombre().equalsIgnoreCase(nombre))
+            if (Lista.get(i).getNombre().equalsIgnoreCase(nombre)) {
                 return false; // Si el nombre de la facultad existe, retorno false
+            }
         }
 
         // Si llegó aquí es porque la puedo agregar
@@ -42,19 +42,20 @@ public class Moodle {
      * Nos permite agregar una carrera a una facultad
      *
      * @param carrera nombre de la carrera
-     * @param year    año de la carrera
-     * @param Ide_F   número de orden de la facultad en la que se desea agregar
+     * @param year año de la carrera
+     * @param Ide_F número de orden de la facultad en la que se desea agregar
      * @return boolean true si se agregó, en caso contrario false
      */
     public boolean addCarrera(String carrera, int year, int Ide_F) {
 
         for (int i = 0; i < Lista.get(Ide_F).getCarreras().size(); i++) {
-            if (Lista.get(Ide_F).getCarreras().get(i).getNombre().equalsIgnoreCase(carrera) && Lista.get(Ide_F).getCarreras().get(i).getYear() == year)
+            if (Lista.get(Ide_F).getCarreras().get(i).getNombre().equalsIgnoreCase(carrera) && Lista.get(Ide_F).getCarreras().get(i).getYear() == year) {
                 return false;
-                    /*
+            }
+            /*
                       Si el nombre de la carrera y el año coinciden entonces estamos hablando de la misma carrera que ya estaría entonces le
                       doy false, solo las dos a la vez porque a mi entender puede existir la carrera de Ing. Informática en 1.er y 2nd año
-                     */
+             */
 
         }
 
@@ -66,21 +67,22 @@ public class Moodle {
     /**
      * Nos permite agregar una asignatura a una carrera
      *
-     * @param nombre  de la asignatura
+     * @param nombre de la asignatura
      * @param C_temas cantidad de temas que tendrá la asignatura
      * @param C_horas cantidad de horas que tendrá la asignatura
-     * @param Ide_F   facultad a la que pertenece la asignatura
-     * @param Ide_C   carrera a la que pertenece la asignatura
+     * @param Ide_F facultad a la que pertenece la asignatura
+     * @param Ide_C carrera a la que pertenece la asignatura
      * @return boolean true si se agregó, en caso contrario false
      */
     public boolean addAsignatura(String nombre, int C_temas, int C_horas, int Ide_F, int Ide_C) {
 
         /* Si el nombre de la asignatura existe, entonces retorno false y no la agrego
            Esto pudiera mejorarse verificando el nombre desde que se pide y así te ahorras entrar los otros datos
-       */
+         */
         for (int i = 0; i < Lista.get(Ide_F).getCarreras().get(Ide_C).getAsignaturas().size(); i++) {
-            if (Lista.get(Ide_F).getCarreras().get(Ide_C).getAsignaturas().get(i).getNombre().equalsIgnoreCase(nombre))
+            if (Lista.get(Ide_F).getCarreras().get(Ide_C).getAsignaturas().get(i).getNombre().equalsIgnoreCase(nombre)) {
                 return false;
+            }
         }
         // Si llegó aquí es porque la puedo agregar
         Lista.get(Ide_F).getCarreras().get(Ide_C).getAsignaturas().add(new Asignatura(nombre, C_temas, C_horas));
@@ -118,7 +120,7 @@ public class Moodle {
         System.out.println("La facultad " + facultad_a_buscar + " no existe");
     }
 
-/*
+    /*
      public void Mostrar_facultad_Mejorado(int Ide_F) { // Mejorado en el sentido de que será más rápido porque le indicas cual el la facultad
           if (!Lista.get(Ide_F).getCarreras().isEmpty()) {
                System.out.println("Carreras de la facultad " + Lista.get(Ide_F));
@@ -138,5 +140,5 @@ public class Moodle {
                System.out.println("La facultad " + Lista.get(Ide_F) + " todavía no tiene carreras");
           }
      }
-*/
+     */
 }

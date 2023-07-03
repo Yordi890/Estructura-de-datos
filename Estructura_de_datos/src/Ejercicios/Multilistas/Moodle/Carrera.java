@@ -6,21 +6,23 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package Ejercicios.Multilistas;
+package Ejercicios.Multilistas.Moodle;
 
 import Listas.Circular_Doble.Circular_Doble;
 
 /**
  * @author Yordanis Tejeda Rodríguez
  */
-public class Facultad {
+public class Carrera {
 
     private String Nombre;
-    private Circular_Doble<Carrera> carreras; // Tendré una lista de carreras en cada facultad
+    private int Year;
+    private Circular_Doble<Asignatura> asignaturas; // Tendré una lista de asignaturas en la carrera
 
-    public Facultad(String Nombre, Circular_Doble<Carrera> carreras) {
+    public Carrera(String Nombre, int Year, Circular_Doble<Asignatura> asignaturas) {
         this.Nombre = Nombre;
-        this.carreras = carreras;
+        this.Year = Year;
+        this.asignaturas = asignaturas;
     }
 
     public String getNombre() {
@@ -31,11 +33,19 @@ public class Facultad {
         this.Nombre = Nombre;
     }
 
-    public Circular_Doble<Carrera> getCarreras() {
-        return carreras;
+    public int getYear() {
+        return Year;
     }
 
-    public void setCarreras(Circular_Doble<Carrera> carreras) {
-        this.carreras = carreras;
+    public void setYear(int Year) {
+        this.Year = Year;
+    }
+
+    public Circular_Doble<Asignatura> getAsignaturas() {
+        return asignaturas;
+    }
+
+    public void Circular_Doble(Circular_Doble<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
     }
 }

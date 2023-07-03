@@ -10,8 +10,11 @@ package Ejercicios.Colas;
 
 import Cola.Cola_enlazada;
 import Cola.Nodo;
+import Listas.Simple_Enlazada.Simple_Enlazada;
+import Pilas.Pila_Enlazada;
 
 public class Test {
+
 
     public static int encontrar_menor(Cola_enlazada<Integer> Cola) {
         int menor = Integer.MAX_VALUE, valor_actual;
@@ -41,7 +44,8 @@ public class Test {
         if (n >= 0 && n < Cola.size()) {
             int valor_actual, suma = 0;
             for (int i = 0; i <= n; i++) {
-                suma += valor_actual = Cola.poll();
+                valor_actual = Cola.poll();
+                suma += valor_actual;
                 Cola.add(valor_actual);
             }
 
@@ -54,18 +58,85 @@ public class Test {
         throw new IndexOutOfBoundsException("Index out of the range");
     }
 
+    public static int llenar_asientos(Cola_enlazada<Integer> Cola, int cant_asientos) {
+        int cant_clientes = 0;
+        while (!Cola.isEmpty() && cant_asientos - Cola.peek() >= 0) {
+            cant_asientos -= Cola.poll();
+            cant_clientes++;
+        }
+        return cant_clientes;
+    }
+
+
+    public static void tiempo_Espera(Cola_enlazada<String> Cola) {
+        while (!Cola.isEmpty()) {
+            System.out.println("El cliente " + Cola.peek() + " demora " + Cola.poll().length() + " segundos");
+        }
+    }
+
+    public static Cola_enlazada<String> invertir_Cola(Cola_enlazada<String> Cola) {
+        Pila_Enlazada<String> P1 = new Pila_Enlazada<>();
+        while (!Cola.isEmpty()) {
+            P1.push(Cola.poll());
+        }
+        while (!P1.isEmpty()) {
+            Cola.add(P1.pop());
+        }
+        return Cola;
+    }
+
+    public static Cola_enlazada<String> unir_Cola(Pila_Enlazada<String> Pila, Cola_enlazada<String> Cola) {
+        while (!Pila.isEmpty()) {
+            Cola.add(Pila.pop());
+        }
+        return Cola;
+    }
+
+    public static Cola_enlazada<Integer> adicionar(Cola_enlazada<Integer> Cola, int nuevo, int pos) {
+        if (pos >= 0 && pos < Cola.size()) {
+            for (int i = 0; i < Cola.size(); i++) {
+                if (i == pos) {
+                    Cola.add(nuevo);
+                } else {
+                    Cola.add(Cola.poll());
+                }
+            }
+            return Cola;
+        }
+        throw new IndexOutOfBoundsException("Index out of the range");
+    }
+
+    public static void ordenar_Cola(Cola_enlazada<Integer> Cola) {
+        Simple_Enlazada<Integer> Lista = new Simple_Enlazada<>();
+
+        while (!Cola.isEmpty()) {
+            Lista.add(Cola.poll());
+        }
+
+        while (!Lista.isEmpty()) {
+            int menor = Integer.MAX_VALUE, pos_menor = -1;
+
+            for (int i = 0; i < Lista.size(); i++) {
+                if (Lista.get(i) < menor) {
+                    menor = Lista.get(i);
+                    pos_menor = i;
+                }
+            }
+            Cola.add(Lista.remove(pos_menor));
+        }
+    }
+
     public static void main(String[] args) {
         Cola_enlazada<Integer> Cola = new Cola_enlazada<Integer>();
 
-        Cola.add(3);
-        Cola.add(8);
+        Cola.add(5);
         Cola.add(2);
-        Cola.add(9);
+        Cola.add(8);
+        Cola.add(10);
+        Cola.add(1);
+        Cola.add(5);
 
-        /*System.out.println("El mayor es " + encontrar_mayor(Cola));
-        System.out.println("El menor es " + encontrar_menor(Cola));*/
-        System.out.println("La suma es " + suma_hasta(Cola, 4));
-
+        ordenar_Cola(Cola);
         Cola.forEach(System.out::println);
     }
 }

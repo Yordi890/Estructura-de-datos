@@ -1,6 +1,5 @@
 package Listas.Simple_Enlazada;
 
-
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.function.Consumer;
@@ -80,7 +79,8 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     private int size;
 
     /**
-     * Crea una nueva lista con first y last inicializados en null, porque estaría vacía y size (cantidad de elementos) en 0
+     * Crea una nueva lista con first y last inicializados en null, porque
+     * estaría vacía y size (cantidad de elementos) en 0
      */
     public Simple_Enlazada() {
         first = last = null;
@@ -134,8 +134,9 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
      * Añadirá el elemento en la posición que se le pase como parámetro
      *
      * @param index posición
-     * @param e     elemento
-     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index > size)
+     * @param e elemento
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index
+     * > size)
      * @since 1.0
      */
     @Override
@@ -143,11 +144,11 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
         checkElementIndex(index);
 
         if (index != size) {
-            if (index == 0) {
-                first = new Nodo<>(e, first);
-            } else {
+            if (index != 0) {
                 Nodo<E> aux = getNodo(index - 1);
                 aux.setNext(new Nodo<>(e, aux.getNext()));
+            } else {
+                first = new Nodo<>(e, first);
             }
             size++; // Siempre se incrementará, en cualquiera de los casos
         } else {
@@ -160,7 +161,8 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
      *
      * @param index posición
      * @return aux elemento que fue eliminado
-     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index > size)
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index
+     * > size)
      * @since 1.0
      */
     @Override
@@ -186,7 +188,8 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     }
 
     /**
-     * Retira de la lista la primera la ocurrencia del objeto especificado. Si no se encuentra se mantendrá sin cambios.
+     * Retira de la lista la primera la ocurrencia del objeto especificado. Si
+     * no se encuentra se mantendrá sin cambios.
      *
      * @param elemento elemento a ser removido de la lista
      * @return true si fue removido, en caso contrario false
@@ -195,7 +198,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
      */
     public boolean remove_Obj(E elemento) {
         Nodo<E> cursor = first;
-
+        // No es recomendado usar un while porque luego de encontrar la posición del objeto la elimino
         for (int i = 0; i < size; i++) {
             if (cursor.getInfo().equals(elemento)) {
                 remove(i);
@@ -212,8 +215,9 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     }
 
     private void checkElementIndex(int index) {
-        if (index < 0 || index > size)
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index out of the range"); // Lanza un error si está fuera de rango
+        }
     }
 
     /**
@@ -221,7 +225,8 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
      *
      * @param index posición
      * @return E elemento
-     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index > size)
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index
+     * > size)
      * @since 1.0.0
      */
     @Override
@@ -408,7 +413,9 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
             }
 
             if (i != pos) // No tiene sentido hacer el procedimiento si el cursor2 llego a donde mismo el cursor
+            {
                 Lista.add(Lista.remove(i), pos);
+            }
 
             cursor = cursor.getNext(); // Tener en cuenta lo que pasa con este cursor (que no cambia cuando se elimina)
         }
@@ -499,7 +506,7 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     }
 
     public void bucket_sort(Simple_Enlazada<Integer> Lista) { // Todavía no está listo
-        int menor = Lista.get(0), mayor = Lista.get(0), size = Lista.size();
+        int menor = Lista.get(0), mayor = Lista.get(0);
 
         for (Integer valor : Lista) {
             if (valor > mayor) {
@@ -598,10 +605,14 @@ public class Simple_Enlazada<E> implements List<E>, Iterable<E> {
     }
 
     private static boolean isListSorted(List<Integer> numberList) {
-        if (numberList == null) return true;
+        if (numberList == null) {
+            return true;
+        }
 
         int length = numberList.size();
-        if (length <= 1) return true;
+        if (length <= 1) {
+            return true;
+        }
 
         for (int i = 0; i < length - 1; i++) {
             if (numberList.get(i) > numberList.get(i + 1)) {

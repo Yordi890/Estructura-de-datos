@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 /**
  * @param <E>
+ * @author Yordanis Tejeda Rodríguez
  */
 public class LinkedIterator<E> implements Iterator<E> {
 
@@ -22,11 +23,9 @@ public class LinkedIterator<E> implements Iterator<E> {
     @Override
     public E next() {
         if (hasNext()) {
-            Nodo<E> aux = cursor;
             cursor = cursor.getNext();
-            return aux.getInfo();
+            return cursor.getPrev().getInfo();
         }
         return null;
     }
-
 }

@@ -25,10 +25,9 @@ public class LinkedIterator<E> implements Iterator<E> {
     @Override
     public E next() {
         if (hasNext()) {
-            Nodo<E> aux = cursor;
-            cursor = cursor.getNext();
             pos++;
-            return aux.getInfo();
+            cursor = cursor.getNext();
+            return cursor.getPrev().getInfo();
         }
         return null;
     }
